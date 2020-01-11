@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -39,20 +40,20 @@ public class RobotMap {
   public static void init() {
     cargoGate = new Spark(3);
     // double value = SmartDashboard.set;
-    LiveWindow.addActuator("Cargo", "Gate", (Spark) cargoGate);
+    //SendableRegistry.setName("Cargo", "Gate", (Spark) cargoGate);
     // Sendable.setName("Cargo","Gate");
     cargoGate.setInverted(false);
     // hatchExtender = new Spark(1);
     // LiveWindow.addActuator("Hatch", "Extender", (Spark) hatchExtender);
     // hatchExtender.setInverted(false);
     armHand = new Spark(0);
-    LiveWindow.addActuator("Arm", "Hand", (Spark) armHand);
+    //LiveWindow.addActuator("Arm", "Hand", (Spark) armHand);
     armHand.setInverted(false);
     hatchArm = new Spark(2);
-    LiveWindow.addActuator("Hatch", "Arm", (Spark) hatchArm);
+    //LiveWindow.addActuator("Hatch", "Arm", (Spark) hatchArm);
     hatchArm.setInverted(false);
     lights = new Spark(9);
-    LiveWindow.addActuator("light", "board", (Spark) lights);
+    //LiveWindow.addActuator("light", "board", (Spark) lights);
     lights.setInverted(false);
     
   }
