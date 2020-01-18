@@ -112,9 +112,13 @@ public class DriveTrain extends Subsystem {
 				speedLimit = .5; 
 				strafeLimit = .8;
 
+
+
 			}
 
 			rotateLimit = .35;
+
+			System.out.println("strafeLimit: " + strafeLimit);
 
 			//System.out.println(Robot.m_oi.getX() * strafeLimit);
 			myDrive.driveCartesian((Robot.m_oi.getY() * speedLimit), (Robot.m_oi.getX() * strafeLimit), (Robot.m_oi.getRotate() * rotateLimit), 0);
