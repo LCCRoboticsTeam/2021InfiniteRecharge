@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 // import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import frc.lib.MecanumDrive;
 import frc.robot.Robot;
 import frc.robot.commands.JoystickInput;
 
@@ -31,7 +31,8 @@ public class DriveTrain extends Subsystem {
 	
 	private double speedLimit;
 	private double rotateLimit;
-	
+	private double strafeLimit;
+
 	public MecanumDrive myDrive;
 
 	public DriveTrain (double speedLimit, double rotateLimit) {
@@ -80,7 +81,7 @@ public class DriveTrain extends Subsystem {
 		// Temporary fix for speedLimit and rotateLimit
 		speedLimit = .5;
 		rotateLimit = .35;
-
+		strafeLimit = .5;
 
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
 		
@@ -104,16 +105,19 @@ public class DriveTrain extends Subsystem {
 			if (Robot.m_oi.getSafety()) {
 
 				speedLimit = 1;
+				strafeLimit = 1;
 
 			} else {
 
 				speedLimit = .5; 
+				strafeLimit = .8;
 
 			}
 
 			rotateLimit = .35;
 
-			myDrive.driveCartesian((Robot.m_oi.getRotate() * rotateLimit), (Robot.m_oi.getX() * .75), (Robot.m_oi.getY() * speedLimit), 0);
+			//System.out.println(Robot.m_oi.getX() * strafeLimit);
+			myDrive.driveCartesian((Robot.m_oi.getY() * speedLimit), (Robot.m_oi.getX() * strafeLimit), (Robot.m_oi.getRotate() * rotateLimit), 0);
     	
     }
 

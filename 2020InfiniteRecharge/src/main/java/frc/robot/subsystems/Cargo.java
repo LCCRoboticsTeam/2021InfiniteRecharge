@@ -27,7 +27,7 @@ public class Cargo extends Subsystem {
         //Cargo Arm Speed, change if need faster.   	
         speed = .71;
         
-            System.out.println("Cargo Saftey off.");
+            //System.out.println("Cargo Saftey off.");
 
     		if (Robot.m_oi.getCargoGate()) {
     		System.out.println("Cargo Gate Button pressed, speed = "+ (-1.0*speed));

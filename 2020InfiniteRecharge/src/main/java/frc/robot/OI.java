@@ -127,6 +127,7 @@ public class OI {
             
     }
 
+    //Previously getX()
     public double getX() {
     	
 		leftXAxis = -mecstick.getX(GenericHID.Hand.kLeft)*-1.0;
@@ -153,7 +154,8 @@ public class OI {
 		
     }
     
-    public double getY() {
+    //Previously getY()
+    public double getRotate() {
     	
     	leftYAxis = mecstick.getY(GenericHID.Hand.kLeft)*-1.0;
 		
@@ -179,7 +181,8 @@ public class OI {
 		
     }
     
-    public double getRotate() {
+    //previously getRotate()
+    public double getY() {
     	
     	rightXAxis = mecstick.getX(GenericHID.Hand.kRight);
 		
