@@ -126,7 +126,7 @@ public class DriveTrain extends Subsystem {
 
 			}
 
-			System.out.print ("strafeLimit: " + strafeLimit);
+			//System.out.print ("strafeLimit: " + strafeLimit);
 
 			//System.out.println(Robot.m_oi.getX() * strafeLimit);
 			myDrive.driveCartesian(

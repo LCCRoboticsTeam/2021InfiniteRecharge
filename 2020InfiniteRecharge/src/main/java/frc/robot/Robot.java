@@ -13,12 +13,16 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 
 import edu.wpi.first.cameraserver.CameraServer;
-
+import edu.wpi.first.wpilibj.ADXL362;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -45,7 +49,11 @@ public class Robot extends TimedRobot {
   public UsbCamera camera1;
   public UsbCamera camera2;
   public VideoSink server;
-   
+
+  ADXRS450_Gyro gyro;
+  ADXL362 accel;
+  BuiltInAccelerometer bAccel;
+
   Timer autoTimer = new Timer();
 
   int currentCamera;
@@ -75,7 +83,14 @@ public class Robot extends TimedRobot {
     // camera.setPixelFormat(PixelFormat.kYUYV);*/
     // camera1.setVideoMode(PixelFormat.kYUYV, 640, 360, 30);
     // camera2.setVideoMode(PixelFormat.kYUYV, 640, 360, 30);
-    
+
+    gyro = new ADXRS450_Gyro();
+    accel = new ADXL362(SPI.Port.kMXP, ADXL362.Range.k8G);
+    bAccel = new BuiltInAccelerometer(Accelerometer.Range.k8G);
+
+
+    gyro.calibrate();
+    gyro.reset();
     
     System.out.println("robotInit is working");
     
@@ -194,6 +209,13 @@ public class Robot extends TimedRobot {
       
     // }
     
+      
+      System.out.print("Accel X: " + accel.getX() + ", ");
+      System.out.print("Accel Y: " + accel.getY() + ", ");
+      System.out.println("Accel Z: " + accel.getZ());
+
+      //System.out.println("Gyro Angle: " + gyro.getAngle());
+
     SmartDashboard.putNumber("Speed Value:", m_oi.getSpeed());
 
     SmartDashboard.putNumber("Controller X: ", m_oi.getX());
