@@ -173,9 +173,11 @@ public class MecanumDrive extends RobotDriveBase implements Sendable, AutoClosea
     xSpeed = applyDeadband(xSpeed, m_deadband);
 
     // Compensate for gyro angle.
-    //Vector2d input = new Vector2d(ySpeed, xSpeed);
+    // Our robots don't use the Gyro
+    // Vector2d input = new Vector2d(ySpeed, xSpeed);
     //input.rotate(-gyroAngle);
 
+    // These values modified for Luci, your mileage may vary
     double[] wheelSpeeds = new double[4];
     wheelSpeeds[MotorType.kFrontLeft.value] = xSpeed + ySpeed + zRotation;
     wheelSpeeds[MotorType.kFrontRight.value] = xSpeed + ySpeed - zRotation;
