@@ -59,6 +59,9 @@ public class OI {
     
     boolean yButton;
     
+    //
+    public static final int kSafety = 4;        //LPSafety = launchpad.getRawButton(4);
+ 
 //  boolean LPSafety;
 //	boolean LPCargoGate;
 //	boolean LPArmDown;
@@ -79,7 +82,7 @@ public class OI {
 		
         leftDeadzone = .1;
 		rightDeadzone = .2;
-        
+
 		/* Not needed here, must pull values in functions below
 		LPSafety = launchpad.getRawButton(4);
 		LPCargoGate = launchpad.getRawButton(5);
@@ -98,33 +101,24 @@ public class OI {
         return mecstick;
     }
     
-
     public Joystick getLaunchPad() {
         return launchpad;
     }
 
-    public boolean getYButton() {
-    	
+    public boolean getYButton() {	
     	return mecstick.getYButton();
-    	
     }
     
-    public boolean getBButton() {
-    	
+    public boolean getBButton() {	
     	return mecstick.getBButton();
-    	
     }
 
     public boolean getAButton() {
-
         return mecstick.getAButton();
-
     }
     
     public boolean getXButton() {
-
-        return mecstick.getXButton();
-            
+        return mecstick.getXButton();        
     }
 
     //Previously getX()
@@ -132,22 +126,14 @@ public class OI {
     	
 		leftXAxis = -mecstick.getX(GenericHID.Hand.kLeft)*-1.0;
 		
-		if (Math.abs(leftXAxis) < leftDeadzone) {
-			
+		if (Math.abs(leftXAxis) < leftDeadzone) {			
 			leftXValue = 0;
-			
-		} else if (leftXAxis < 0) {
-			
+		} else if (leftXAxis < 0) {		
 			leftXValue = leftXAxis + leftDeadzone;
-			
-		} else if (leftXAxis > 0) {
-			
+		} else if (leftXAxis > 0) {		
 			leftXValue = leftXAxis - leftDeadzone;
-			
-		} else {
-			
-			leftXValue = 0;
-			
+		} else {		
+			leftXValue = 0;	
 		}
 		
 		return leftXValue;
@@ -211,31 +197,32 @@ public class OI {
     public boolean getSafety() {
     	return launchpad.getRawButton(4);	
     }
+
     public boolean getCargoGate() {
     	return launchpad.getRawButton(5);	
     }
     
-    public boolean getArmDown() {
+    public boolean getBallIn() {
     	return launchpad.getRawButton(6);
     }
 
-    public boolean getArmUp() {
+    public boolean getBallOut() {
     	return launchpad.getRawButton(7);
     }
 
-    public boolean getHandExt() {
+    public boolean getArmUp() {
     	return launchpad.getRawButton(8);
     }    
     
-    public boolean getHandRtc() {
+    public boolean getArmDown() {
     	return launchpad.getRawButton(9);
     }
     
-    public boolean getHandOpen() {
+    public boolean getClimbUp() {
     	return launchpad.getRawButton(10);
     }
     
-    public boolean getHandClose() {
+    public boolean getClimbDown() {
     	return launchpad.getRawButton(11);
     }
     

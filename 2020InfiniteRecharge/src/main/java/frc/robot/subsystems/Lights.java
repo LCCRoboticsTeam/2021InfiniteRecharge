@@ -2,13 +2,18 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Spark;
+// import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Lights extends Subsystem {
 
-    private final Spark lights = RobotMap.lights;
+    private Spark lights;
+    //private Spark lights = RobotMap.lights;
+    private int channel;
     private double speed;
     private int lightSetting;
 
@@ -18,6 +23,11 @@ public class Lights extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
 
+    public Lights (int channelInput){
+        channel = channelInput;
+        lights = new Spark (channelInput);
+        lights.setInverted(false);
+    }
     // This routine is run continuously while in teleoperate mode
     @Override
     public void periodic() {       
@@ -76,7 +86,9 @@ public class Lights extends Subsystem {
             lights.set(-0.99);
 
         }
-        
+    // Publish values to SmartDashboard
+    //SendableRegistry.setName("lightSetting", 1, (Spark) cargoGate);
+    //Sendable.setName("Cargo","Gate"); 
     }
 
     // Put methods for controlling this subsystem
@@ -87,6 +99,49 @@ public class Lights extends Subsystem {
     //     lights.set(-0.99);
 
     // }
+
+
+    /**
+     * @return int return the channel
+     */
+    public int getChannel() {
+        return channel;
+    }
+
+    /**
+     * @param channel the channel to set
+     */
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
+
+    /**
+     * @return double return the speed
+     */
+    public double getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed the speed to set
+     */
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * @return int return the lightSetting
+     */
+    public int getLightSetting() {
+        return lightSetting;
+    }
+
+    /**
+     * @param lightSetting the lightSetting to set
+     */
+    public void setLightSetting(int lightSetting) {
+        this.lightSetting = lightSetting;
+    }
 
 }
 
