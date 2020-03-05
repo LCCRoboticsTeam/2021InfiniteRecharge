@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Spark;
 // Use this for Talon motor controllers
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-
 import frc.robot.Robot;
 
 //
@@ -60,6 +59,7 @@ public class IntakeArm extends Subsystem {
         speed = speedInput;
         talonMotor = new WPI_TalonSRX(motorIDInput);
         talonMotor.setInverted(false);
+        
         if (printDebug) {
             System.out.println("IntakeArm: initialized constructor ");
         }

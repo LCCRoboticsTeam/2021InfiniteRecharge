@@ -59,7 +59,7 @@ public class Climber extends Subsystem {
         //Cargo Arm Speed, change if need faster.   	
         // speed = 0.0;
         
-            //System.out.println("Cargo Saftey off.");
+            //System.out.println("Saftey off.");
 
     		// if (Robot.m_oi.getClimbUp()) {
             //     if (printDebug) {
@@ -78,6 +78,11 @@ public class Climber extends Subsystem {
     		// } else {  // else no hand button pressed, so stop motor
             //     talonMotor.set(0);
             // }
+
+            if (talonMotor.getSensorCollection().isFwdLimitSwitchClosed()) {
+                // Activiate the solenoid
+                
+            }
     	
     }
     // Put methods for controlling this subsystem
