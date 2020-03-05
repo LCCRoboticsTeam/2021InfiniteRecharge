@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     SmartDashboard.putData("Auto mode", m_chooser);
-    SmartDashboard.putNumber("LPDial", m_oi.getSpeed());
+    //SmartDashboard.putNumber("LPDial", m_oi.getSpeed());
   }
 
   /**
@@ -220,7 +220,7 @@ public class Robot extends TimedRobot {
 
       //System.out.println("Gyro Angle: " + gyro.getAngle());
 
-    SmartDashboard.putNumber("Speed Value:", m_oi.getSpeed());
+    //SmartDashboard.putNumber("Speed Value:", m_oi.getSpeed());
     SmartDashboard.putNumber("Controller X: ", m_oi.getX());
 
   }

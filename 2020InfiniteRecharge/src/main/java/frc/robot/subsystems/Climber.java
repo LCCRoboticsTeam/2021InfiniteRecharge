@@ -57,7 +57,7 @@ public class Climber extends Subsystem {
 
         // speed = Robot.m_oi.getSpeed(); 
         //Cargo Arm Speed, change if need faster.   	
-        speed = 0.0;
+        // speed = 0.0;
         
             //System.out.println("Cargo Saftey off.");
 

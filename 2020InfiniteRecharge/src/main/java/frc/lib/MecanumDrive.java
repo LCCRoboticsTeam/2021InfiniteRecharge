@@ -208,6 +208,38 @@ public class MecanumDrive extends RobotDriveBase implements Sendable, AutoClosea
     feed();
   }
 
+  public void setFLSpeed(double Speed) {
+    this.FLSpeed = Speed;
+  }
+
+  public double getFLSpeed() {
+    return FLSpeed;
+  }
+
+  public void setFRSpeed(double Speed) {
+    this.FRSpeed = Speed;
+  }
+
+  public double getFRSpeed() {
+    return FRSpeed;
+  }
+
+  public void setRLSpeed(double Speed) {
+    this.RLSpeed = Speed;
+  }
+
+  public double getRLSpeed() {
+    return RLSpeed;
+  }
+
+  public void setRRSpeed(double Speed) {
+    this.RRSpeed = Speed;
+  }
+
+  public double getRRSpeed() {
+    return RRSpeed;
+  }
+
   /**
    * Drive method for Mecanum platform.
    *

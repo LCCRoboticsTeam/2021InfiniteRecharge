@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.lib.MecanumDrive;
 import frc.robot.Robot;
 import frc.robot.commands.JoystickInput;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public class DriveTrain extends Subsystem {
 
@@ -42,6 +43,8 @@ public class DriveTrain extends Subsystem {
 
 	public MecanumDrive myDrive;
 
+	private int Wheel;
+
 	// Constructor for DriveTrain instantiation, with initializers
 	public DriveTrain (double speedLimit, double rotateLimit, double strafeLimit) {
 		
@@ -60,6 +63,9 @@ public class DriveTrain extends Subsystem {
 		this.speedLimit = speedLimit;
 		this.rotateLimit = rotateLimit;
 		this.strafeLimit = strafeLimit;
+
+		//Set "Wheel" for calibration if enabled
+		Wheel = 0;
 
 		//Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
@@ -92,6 +98,9 @@ public class DriveTrain extends Subsystem {
 		rotateLimit = .35;
 		strafeLimit = .8;
 
+		//Set "Wheel" for calibration if enabled
+		Wheel = 1;
+
 		//Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
 
@@ -117,28 +126,92 @@ public class DriveTrain extends Subsystem {
 	// Periodic run continuously during teleoperate mode
     @Override
     public void periodic() {
-			// myDrive.
-			// if (Robot.m_oi.getSafety()) {
+		// myDrive.
 
-			// 	speedLimit = 1.0;
-			// 	strafeLimit = 1.0;
+		// System.out.println(Robot.m_oi.getSpeed());
+		SmartDashboard.putNumber("Dial Output: ", Robot.m_oi.getSpeed());
 
-			// } else {
+		//Wheel Speed Limits
 
-			// 	speedLimit = 0.5; 
-			// 	strafeLimit = 0.8;
+		SmartDashboard.putNumber("Front Left Percent", myDrive.getFLSpeed());
+		SmartDashboard.putNumber("Front Right Percent", myDrive.getFRSpeed());
+		SmartDashboard.putNumber("Rear Left Percent", myDrive.getRLSpeed());
+		SmartDashboard.putNumber("Rear Right Percent", myDrive.getRRSpeed());
+
+		//Test Code for Selecting Calibration Motor
+		if (Robot.m_oi.getArmDown()) {
+			// System.out.println("Front Left Wheel Selected");
+			Wheel = 1;
+			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+			
+		} else if (Robot.m_oi.getArmUp()) {
+			// System.out.println("Back Left Wheel Selected");
+			Wheel = 2;
+			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+			
+		} else if (Robot.m_oi.getBallIn()) {
+			// System.out.println("Front Right Wheel Selected");
+			Wheel = 3;
+			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+			
+		} else if (Robot.m_oi.getBallOut()) {
+			// System.out.println("Back Right Wheel Selected");
+			Wheel = 4;
+			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+			
+		} else if (Robot.m_oi.getBlueButton()) {
+			// System.out.println("Back Right Wheel Selected");
+			Wheel = 0;
+			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+		} 
+
+		if (Wheel == 1) {
+
+			myDrive.setFLSpeed(Robot.m_oi.getSpeed());
+
+		} else if (Wheel == 2) {
+
+			myDrive.setRLSpeed(Robot.m_oi.getSpeed());
+
+		} else if (Wheel == 3) {
+
+			myDrive.setFRSpeed(Robot.m_oi.getSpeed());
+
+		} else if (Wheel == 4) {
+
+			myDrive.setRRSpeed(Robot.m_oi.getSpeed());
+
+		}
+
+		// if (Robot.m_oi.getSafety()) {
+
+		// 	speedLimit = 1.0;
+		// 	strafeLimit = 1.0;
+
+		// } else {
+
+		// 	speedLimit = 0.5; 
+		// 	strafeLimit = 0.8;
 				
-			// }
+		// }
 
-			//System.out.print ("strafeLimit: " + strafeLimit);
-			//System.out.println(Robot.m_oi.getX() * strafeLimit);
 
-			myDrive.driveCartesian(
-				(Robot.m_oi.getY() * speedLimit),       // set Y speed
-				(Robot.m_oi.getX() * strafeLimit),      // set X speed
-				(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
-				0);                                     // gyro angle 
-    	
+
+		//System.out.print ("strafeLimit: " + strafeLimit);
+		//System.out.println(Robot.m_oi.getX() * strafeLimit);
+
+		// myDrive.driveCartesian(
+		// 	(Robot.m_oi.getY() * speedLimit),       // set Y speed
+		// 	(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+		// 	(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
+		// 	0);                                     // gyro angle 
+		
+		myDrive.driveCartesian(
+			(Robot.m_oi.getY()),       // set Y speed
+			(Robot.m_oi.getX()),      // set X speed
+			(Robot.m_oi.getRotate()), // set rotation rate
+			0); 
+
     }
 
     // Put methods for controlling this subsystem
