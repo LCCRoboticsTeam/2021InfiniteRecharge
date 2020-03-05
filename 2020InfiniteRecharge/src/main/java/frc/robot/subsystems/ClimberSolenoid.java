@@ -82,7 +82,12 @@ public class ClimberSolenoid extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    
+    public void extendSolenoid (boolean printDebugInput) {
+        if (printDebugInput) {
+            System.out.println("Solenoid: extend solenoid called");
+        }
+        talonMotor.set(0.5); 
+    }
     public boolean isPrintDebug() {
         return printDebug;
     }

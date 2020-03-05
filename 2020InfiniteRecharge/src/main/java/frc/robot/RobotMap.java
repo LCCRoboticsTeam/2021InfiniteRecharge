@@ -74,8 +74,8 @@ public class RobotMap {
     //Instantiate light controllers
     //sponsorLights = new Lights(kSponsorLights);
     /*
-    leftLights = new Lights(10);
-    rightLights = new Lights(11);
+    leftLights = new Lights(kLeftLight);
+    rightLights = new Lights(kRightLight);
     */
 
   }
