@@ -31,6 +31,12 @@ public class ClimberSolenoid extends Subsystem {
         printDebug = false;
     }
 
+    public ClimberSolenoid(double speed) {
+        this.speed = speed;
+        talonMotor = new WPI_TalonSRX(2);
+        talonMotor.setInverted(false);
+        printDebug = false;
+    }
 
     // Intialized constructor, accepts a channel for initialization
     /**
@@ -86,7 +92,7 @@ public class ClimberSolenoid extends Subsystem {
         if (printDebugInput) {
             System.out.println("Solenoid: extend solenoid called");
         }
-        talonMotor.set(0.5); 
+        talonMotor.set(speed); 
     }
     public boolean isPrintDebug() {
         return printDebug;

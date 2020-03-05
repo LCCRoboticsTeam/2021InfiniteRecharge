@@ -94,7 +94,7 @@ public class DriveTrain extends Subsystem {
 		backRight775 = new WPI_TalonSRX(kBackRight775);
 		
 		// Set speedLimit and rotateLimit to default values
-		speedLimit = .5;
+		speedLimit = .6;
 		rotateLimit = .35;
 		strafeLimit = .8;
 
@@ -104,7 +104,7 @@ public class DriveTrain extends Subsystem {
 		//Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
 
-		//Instantiate Mecanum drive with CIM motors
+		//Instantiate Mecanum drive with CIM motors (Comment out code to make them follow 775's first)
 		//myDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
 
@@ -129,59 +129,60 @@ public class DriveTrain extends Subsystem {
 		// myDrive.
 
 		// System.out.println(Robot.m_oi.getSpeed());
-		SmartDashboard.putNumber("Dial Output: ", Robot.m_oi.getSpeed());
+		// SmartDashboard.putNumber("Dial Output: ", Robot.m_oi.getSpeed());
 
-		//Wheel Speed Limits
+		// //Wheel Speed Limits
 
-		SmartDashboard.putNumber("Front Left Percent", myDrive.getFLSpeed());
-		SmartDashboard.putNumber("Front Right Percent", myDrive.getFRSpeed());
-		SmartDashboard.putNumber("Rear Left Percent", myDrive.getRLSpeed());
-		SmartDashboard.putNumber("Rear Right Percent", myDrive.getRRSpeed());
+		// SmartDashboard.putNumber("Front Left Percent", myDrive.getFLSpeed());
+		// SmartDashboard.putNumber("Front Right Percent", myDrive.getFRSpeed());
+		// SmartDashboard.putNumber("Rear Left Percent", myDrive.getRLSpeed());
+		// SmartDashboard.putNumber("Rear Right Percent", myDrive.getRRSpeed());
 
-		//Test Code for Selecting Calibration Motor
-		if (Robot.m_oi.getArmDown()) {
-			// System.out.println("Front Left Wheel Selected");
-			Wheel = 1;
-			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+		//Test Code for Selecting Calibration Motor 
+		//***COMMENT OUT BEFORE REAL GAME USE***
+		// if (Robot.m_oi.getArmDown()) {
+		// 	// System.out.println("Front Left Wheel Selected");
+		// 	Wheel = 1;
+		// 	SmartDashboard.putNumber("Wheel Selected: ", Wheel);
 			
-		} else if (Robot.m_oi.getArmUp()) {
-			// System.out.println("Back Left Wheel Selected");
-			Wheel = 2;
-			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+		// } else if (Robot.m_oi.getArmUp()) {
+		// 	// System.out.println("Back Left Wheel Selected");
+		// 	Wheel = 2;
+		// 	SmartDashboard.putNumber("Wheel Selected: ", Wheel);
 			
-		} else if (Robot.m_oi.getBallIn()) {
-			// System.out.println("Front Right Wheel Selected");
-			Wheel = 3;
-			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+		// } else if (Robot.m_oi.getBallIn()) {
+		// 	// System.out.println("Front Right Wheel Selected");
+		// 	Wheel = 3;
+		// 	SmartDashboard.putNumber("Wheel Selected: ", Wheel);
 			
-		} else if (Robot.m_oi.getBallOut()) {
-			// System.out.println("Back Right Wheel Selected");
-			Wheel = 4;
-			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+		// } else if (Robot.m_oi.getBallOut()) {
+		// 	// System.out.println("Back Right Wheel Selected");
+		// 	Wheel = 4;
+		// 	SmartDashboard.putNumber("Wheel Selected: ", Wheel);
 			
-		} else if (Robot.m_oi.getBlueButton()) {
-			// System.out.println("Back Right Wheel Selected");
-			Wheel = 0;
-			SmartDashboard.putNumber("Wheel Selected: ", Wheel);
-		} 
+		// } else if (Robot.m_oi.getBlueButton()) {
+		// 	// System.out.println("Back Right Wheel Selected");
+		// 	Wheel = 0;
+		// 	SmartDashboard.putNumber("Wheel Selected: ", Wheel);
+		// } 
 
-		if (Wheel == 1) {
+		// if (Wheel == 1) {
 
-			myDrive.setFLSpeed(Robot.m_oi.getSpeed());
+		// 	myDrive.setFLSpeed(Robot.m_oi.getSpeed());
 
-		} else if (Wheel == 2) {
+		// } else if (Wheel == 2) {
 
-			myDrive.setRLSpeed(Robot.m_oi.getSpeed());
+		// 	myDrive.setRLSpeed(Robot.m_oi.getSpeed());
 
-		} else if (Wheel == 3) {
+		// } else if (Wheel == 3) {
 
-			myDrive.setFRSpeed(Robot.m_oi.getSpeed());
+		// 	myDrive.setFRSpeed(Robot.m_oi.getSpeed());
 
-		} else if (Wheel == 4) {
+		// } else if (Wheel == 4) {
 
-			myDrive.setRRSpeed(Robot.m_oi.getSpeed());
+		// 	myDrive.setRRSpeed(Robot.m_oi.getSpeed());
 
-		}
+		// }
 
 		// if (Robot.m_oi.getSafety()) {
 
@@ -200,17 +201,17 @@ public class DriveTrain extends Subsystem {
 		//System.out.print ("strafeLimit: " + strafeLimit);
 		//System.out.println(Robot.m_oi.getX() * strafeLimit);
 
-		// myDrive.driveCartesian(
-		// 	(Robot.m_oi.getY() * speedLimit),       // set Y speed
-		// 	(Robot.m_oi.getX()  * strafeLimit),      // set X speed
-		// 	(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
-		// 	0);                                     // gyro angle 
-		
 		myDrive.driveCartesian(
-			(Robot.m_oi.getY()),       // set Y speed
-			(Robot.m_oi.getX()),      // set X speed
-			(Robot.m_oi.getRotate()), // set rotation rate
-			0); 
+			(Robot.m_oi.getY() * speedLimit),       // set Y speed
+			(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+			(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
+			0);                                     // gyro angle 
+		
+		// myDrive.driveCartesian(
+		// 	(Robot.m_oi.getY()),       // set Y speed
+		// 	(Robot.m_oi.getX()),      // set X speed
+		// 	(Robot.m_oi.getRotate()), // set rotation rate
+		// 	0); 
 
     }
 

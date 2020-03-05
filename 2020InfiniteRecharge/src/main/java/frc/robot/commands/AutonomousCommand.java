@@ -42,12 +42,12 @@ public class AutonomousCommand extends Command {
                 break;
             case kDefaultAuto:
             default:
-                if (autoTimer.get() < 3.0) {
-                    myDrive.driveCartesian (0.0, -0.35, 0.0);
+                // if (autoTimer.get() < 3.0) {
+                //     myDrive.driveCartesian (0.0, -0.35, 0.0);
                     
-                } else {
-                    myDrive.driveCartesian (0.0, 0.0, 0.0);
-                }
+                // } else {
+                //     myDrive.driveCartesian (0.0, 0.0, 0.0);
+                // }
                 break;
         }
     }

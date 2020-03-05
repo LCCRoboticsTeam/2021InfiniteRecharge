@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 // Import WPI libraries
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 /*
 // Use this for Spark motor controllers
 import edu.wpi.first.wpilibj.Spark;
@@ -45,6 +46,18 @@ public class Climber extends Subsystem {
         }
     }
 
+    public Climber (int motorIDInput, int speed) {
+        // speed = Robot.m_oi.getSpeed();
+        this.speed = speed;
+
+        talonMotor = new WPI_TalonSRX(motorIDInput);
+        talonMotor.setInverted(false);
+
+        if (printDebug) {
+            System.out.println("Climb: initialized constructor");
+        }
+    }
+
     @Override
     public void initDefaultCommand() {
     	
@@ -57,33 +70,36 @@ public class Climber extends Subsystem {
 
         // speed = Robot.m_oi.getSpeed(); 
         //Cargo Arm Speed, change if need faster.   	
-        // speed = 0.0;
+        //speed = 0.0;
         
-            //System.out.println("Saftey off.");
+        
+        // System.out.println("Saftey off.");
+        SmartDashboard.putBoolean("Climber Safety Mode: ", Robot.m_oi.getSafety());
 
-    		// if (Robot.m_oi.getClimbUp()) {
-            //     if (printDebug) {
-            //         System.out.println("Climb: up speed = " + speed);
-            //     }
-            //     talonMotor.setInverted(false);  // do not reverse motor
-            //     talonMotor.set(speed);          // activate motor
+        if (Robot.m_oi.getSafety()) {
+    		if (Robot.m_oi.getClimbUp()) {
+                // if (printDebug) {
+                //     System.out.println("Climb: up speed = " + speed);
+                // }
+                talonMotor.setInverted(false);  // do not reverse motor
+                talonMotor.set(speed);          // activate motor
     		
-    		// } else if (Robot.m_oi.getClimbDown()) {
-            //     if (printDebug) {
-            //         System.out.println("IntakeArm: retract speed = " + speed);
-            //     }
-            //     talonMotor.setInverted(true);   // reverse motor
-            //     talonMotor.set(speed);
+    		} else if (Robot.m_oi.getClimbDown()) {
+                // if (printDebug) {
+                //     System.out.println("IntakeArm: retract speed = " + speed);
+                // }
+                talonMotor.setInverted(true);   // reverse motor
+                talonMotor.set(speed);
                 
-    		// } else {  // else no hand button pressed, so stop motor
-            //     talonMotor.set(0);
-            // }
+    		} else {  // else no hand button pressed, so stop motor
+                talonMotor.set(0);
+            }
 
             if (talonMotor.getSensorCollection().isFwdLimitSwitchClosed()) {
                 // Activiate the solenoid
                 
             }
-    	
+        }
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
