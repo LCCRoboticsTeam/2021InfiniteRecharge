@@ -11,17 +11,17 @@ import frc.robot.commands.JoystickInput;
 public class DriveTrain extends Subsystem {
 
 	// Use the unique ID number that was assigned with the Phoenix tuner tool
-	private final int kFrontLeftCIM = 1;
-	private final int kFrontLeft775 = 0;
+	private final int kFrontLeftCIM = 6;
+	private final int kFrontLeft775 = 5;
 
-	private final int kFrontRightCIM = 6;
-	private final int kFrontRight775 = 7;
+	private final int kFrontRightCIM = 3;
+	private final int kFrontRight775 = 4;
 
-	private final int kBackLeftCIM = 2;
-	private final int kBackLeft775 = 3;
+	private final int kBackLeftCIM = 7;
+	private final int kBackLeft775 = 8;
 
-	private final int kBackRightCIM = 5;
-	private final int kBackRight775 = 4;
+	private final int kBackRightCIM = 2;
+	private final int kBackRight775 = 1;
 	
 	// Create CIM identifiers
 	WPI_TalonSRX frontLeftMotor;
@@ -43,7 +43,7 @@ public class DriveTrain extends Subsystem {
 	public MecanumDrive myDrive;
 
 	// Constructor for DriveTrain instantiation, with initializers
-	public DriveTrain (double speedLimit, double rotateLimit) {
+	public DriveTrain (double speedLimit, double rotateLimit, double strafeLimit) {
 		
 		// Create motor controllers and assign to the phoenix tuner specified motor identifier
 		frontLeftMotor = new WPI_TalonSRX(kFrontLeftCIM);
@@ -59,7 +59,7 @@ public class DriveTrain extends Subsystem {
 		// set speed and rotate limit based on initialization parameters
 		this.speedLimit = speedLimit;
 		this.rotateLimit = rotateLimit;
-		this.strafeLimit = .8;
+		this.strafeLimit = strafeLimit;
 
 		//Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
@@ -94,7 +94,11 @@ public class DriveTrain extends Subsystem {
 
 		//Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
-		
+
+		//Instantiate Mecanum drive with CIM motors
+		//myDrive = new MecanumDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
+
+
 		// Slave CIM motors to 775 motors
 		frontLeftMotor.follow(frontLeft775);
 		frontRightMotor.follow(frontRight775);
@@ -114,17 +118,17 @@ public class DriveTrain extends Subsystem {
     @Override
     public void periodic() {
 			// myDrive.
-			if (Robot.m_oi.getSafety()) {
+			// if (Robot.m_oi.getSafety()) {
 
-				speedLimit = 1.0;
-				strafeLimit = 1.0;
+			// 	speedLimit = 1.0;
+			// 	strafeLimit = 1.0;
 
-			} else {
+			// } else {
 
-				speedLimit = 0.5; 
-				strafeLimit = 0.8;
-
-			}
+			// 	speedLimit = 0.5; 
+			// 	strafeLimit = 0.8;
+				
+			// }
 
 			//System.out.print ("strafeLimit: " + strafeLimit);
 			//System.out.println(Robot.m_oi.getX() * strafeLimit);

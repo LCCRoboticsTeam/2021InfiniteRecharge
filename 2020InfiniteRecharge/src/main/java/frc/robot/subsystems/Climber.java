@@ -2,30 +2,30 @@ package frc.robot.subsystems;
 
 // Import WPI libraries
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+/*
 // Use this for Spark motor controllers
 import edu.wpi.first.wpilibj.Spark;
-/* 
+*/
 // Use this for Talon motor controllers
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-*/
+
 
 import frc.robot.Robot;
 
 public class Climber extends Subsystem {
-
+    /*
     private final Spark sparkMotor;
-    /* 
-    private final WPI_TalonSRX talonMotor;
     */
+    private final WPI_TalonSRX talonMotor;
+
     private double speed;
     private boolean printDebug;
 
     // Default constructor
     public Climber () {
-        speed = 0.4;
-        sparkMotor = new Spark (1);
-        sparkMotor.setInverted(false);
+        speed = 0.0;
+        talonMotor = new WPI_TalonSRX(1);
+        talonMotor.setInverted(false);
         printDebug = false;
     }
         
@@ -35,10 +35,10 @@ public class Climber extends Subsystem {
      */
     public Climber (int motorIDInput) {
         // speed = Robot.m_oi.getSpeed();
-        speed = 0.4;
+        speed = 0.0;
 
-        sparkMotor = new Spark(motorIDInput);
-        sparkMotor.setInverted(false);
+        talonMotor = new WPI_TalonSRX(motorIDInput);
+        talonMotor.setInverted(false);
 
         if (printDebug) {
             System.out.println("Climb: initialized constructor");
@@ -57,27 +57,27 @@ public class Climber extends Subsystem {
 
         // speed = Robot.m_oi.getSpeed(); 
         //Cargo Arm Speed, change if need faster.   	
-        speed = .71;
+        speed = 0.0;
         
             //System.out.println("Cargo Saftey off.");
 
-    		if (Robot.m_oi.getClimbUp()) {
-                if (printDebug) {
-                    System.out.println("Climb: up speed = " + speed);
-                }
-                sparkMotor.setInverted(false);  // do not reverse motor
-                sparkMotor.set(speed);          // activate motor
+    		// if (Robot.m_oi.getClimbUp()) {
+            //     if (printDebug) {
+            //         System.out.println("Climb: up speed = " + speed);
+            //     }
+            //     talonMotor.setInverted(false);  // do not reverse motor
+            //     talonMotor.set(speed);          // activate motor
     		
-    		} else if (Robot.m_oi.getClimbDown()) {
-                if (printDebug) {
-                    System.out.println("IntakeArm: retract speed = " + speed);
-                }
-                sparkMotor.setInverted(true);   // reverse motor
-                sparkMotor.set(speed);
+    		// } else if (Robot.m_oi.getClimbDown()) {
+            //     if (printDebug) {
+            //         System.out.println("IntakeArm: retract speed = " + speed);
+            //     }
+            //     talonMotor.setInverted(true);   // reverse motor
+            //     talonMotor.set(speed);
                 
-    		} else {  // else no hand button pressed, so stop motor
-                sparkMotor.set(0);
-            }
+    		// } else {  // else no hand button pressed, so stop motor
+            //     talonMotor.set(0);
+            // }
     	
     }
     // Put methods for controlling this subsystem

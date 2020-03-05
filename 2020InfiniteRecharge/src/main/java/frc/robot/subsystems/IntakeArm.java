@@ -2,13 +2,13 @@ package frc.robot.subsystems;
 
 // Import WPI libraries
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+/*
 // Use this for Spark motor controllers
 import edu.wpi.first.wpilibj.Spark;
-/* 
+*/
 // Use this for Talon motor controllers
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-*/
+
 
 import frc.robot.Robot;
 
@@ -18,19 +18,19 @@ import frc.robot.Robot;
  * @class IntakeArm class is for controlling the position of the intake arm
  */
 public class IntakeArm extends Subsystem {
-
+    /*
     private final Spark sparkMotor;
-    /* 
-    private final WPI_TalonSRX talonMotor;
     */
+    private final WPI_TalonSRX talonMotor;
+    
     private double speed;
     private boolean printDebug;
 
     // Default constructor
     public IntakeArm () {
-        speed = 0.4;
-        sparkMotor = new Spark (1);
-        sparkMotor.setInverted(false);
+        speed = 0.0;
+        talonMotor = new WPI_TalonSRX(1);
+        talonMotor.setInverted(false);
         printDebug = false;
     }
 
@@ -41,10 +41,10 @@ public class IntakeArm extends Subsystem {
      */
     public IntakeArm(int motorIDInput) {
         // speed = Robot.m_oi.getSpeed();
-        speed = 0.4;
+        speed = 0.0;
 
-        sparkMotor = new Spark(motorIDInput);
-        sparkMotor.setInverted(false);
+        talonMotor = new WPI_TalonSRX(motorIDInput);
+        talonMotor.setInverted(false);
         if (printDebug) {
             System.out.println("IntakeArm: default constructor ");
         }
@@ -58,8 +58,8 @@ public class IntakeArm extends Subsystem {
     public IntakeArm(int motorIDInput, double speedInput) {
 
         speed = speedInput;
-        sparkMotor = new Spark(motorIDInput);
-        sparkMotor.setInverted(false);
+        talonMotor = new WPI_TalonSRX(motorIDInput);
+        talonMotor.setInverted(false);
         if (printDebug) {
             System.out.println("IntakeArm: initialized constructor ");
         }
@@ -76,23 +76,23 @@ public class IntakeArm extends Subsystem {
     public void periodic() {
         // Put code here to be run every loop
 
-        if (Robot.m_oi.getArmUp()) {
-            if (printDebug) {
-                System.out.println("IntakeArm: extend speed = " + -1.0 * speed);
-            }
-            sparkMotor.setInverted(false);  // do not reverse motor
-            sparkMotor.set(speed);          // activate motor
+        // if (Robot.m_oi.getArmUp()) {
+        //     if (printDebug) {
+        //         System.out.println("IntakeArm: extend speed = " + -1.0 * speed);
+        //     }
+        //     talonMotor.setInverted(false);  // do not reverse motor
+        //     talonMotor.set(speed);          // activate motor
 
-        } else if (Robot.m_oi.getArmDown()) {
-            if (printDebug) {
-                System.out.println("IntakeArm: retract speed = " + speed);
-            }
-            sparkMotor.setInverted(true);
-            sparkMotor.set(speed);
+        // } else if (Robot.m_oi.getArmDown()) {
+        //     if (printDebug) {
+        //         System.out.println("IntakeArm: retract speed = " + speed);
+        //     }
+        //     talonMotor.setInverted(true);
+        //     talonMotor.set(speed);
 
-        } else {  // else no hand button pressed, so stop motor
-            sparkMotor.set(0);
-        }
+        // } else {  // else no hand button pressed, so stop motor
+        //     talonMotor.set(0);
+        // }
 
     }
 
@@ -105,12 +105,12 @@ public class IntakeArm extends Subsystem {
      */
     public void driveIntakeArm (double speedInput) {
 
-        if (printDebug) {
-            System.out.println("IntakeArm: driveIntakeArm speed = " + speed);
-        }
+        // if (printDebug) {
+        //     System.out.println("IntakeArm: driveIntakeArm speed = " + speed);
+        // }
 
-        sparkMotor.setInverted(false);
-        sparkMotor.set(speed);
+        // talonMotor.setInverted(false);
+        // talonMotor.set(speed);
     }
     
     public boolean isPrintDebug() {

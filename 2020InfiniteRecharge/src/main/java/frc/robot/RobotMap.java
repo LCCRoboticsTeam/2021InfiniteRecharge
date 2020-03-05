@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.subsystems.IntakeArm;
@@ -28,20 +29,22 @@ public class RobotMap {
  
   // Public motor IDs, should match what was set using the Phoenix tuner on the robot
                                                   // These were the Luci values:
-  public static final int kIntakeArmID = 0;       // armHand = new Spark(0);
-  public static final int kIntakeBallID = 1;      // hatchExtender = new Spark(1);
-  public static final int kClimberID = 2;         // hatchArm = new Spark(2);
-  public static final int kCargoID = 3;           // cargoGate = new Spark(3);
+  public static final int kIntakeArmID = 11;       // armHand = new Spark(0);
+  public static final int kIntakeBallID = 10;      // hatchExtender = new Spark(1);
+  public static final int kClimberID = 9;         // hatchArm = new Spark(2);
+  //public static final int kSolenoid = 12;
+  //public static final int kCargoID = 3;           // cargoGate = new Spark(3);
 
-  public static final int kSponsorLights = 9;
-  public static final int kLeftLight = 10;
-  public static final int kRightLight = 11;
+  //public static final int kSponsorLights = 9;
+  //public static final int kLeftLight = 10;
+  //public static final int kRightLight = 11;
 
   //public static Ultrasonic environmentalUltrasonicFront;
   //public static Ultrasonic environmentalUltrasonicRear;
   public static IntakeArm intakeArm;
   public static IntakeBall intakeBall;
   public static Climber climber;
+  //public static Solenoid solenoid;
 
   public static Lights sponsorLights;
   public static Lights leftLights;
@@ -51,14 +54,14 @@ public class RobotMap {
   public static void init() {
     
     // Instantiate Intake Arm raise/lower motor (was hatch extender)
-    intakeArm = new IntakeArm (kIntakeArmID);
+    intakeArm = new IntakeArm(kIntakeArmID);
     intakeArm.setPrintDebug(true);
 
     // hatchExtender = new Spark(1);
     // LiveWindow.addActuator("Hatch", "Extender", (Spark) hatchExtender);
     
     //Instantiate Ball Intake in/out motor (was hatch hand)
-    intakeBall = new IntakeBall (kIntakeBallID);
+    intakeBall = new IntakeBall(kIntakeBallID);
     intakeBall.setPrintDebug(true);
     /*
     armHand = new Spark(0);
@@ -66,7 +69,7 @@ public class RobotMap {
     */
 
     // Instantiate Climber up/down motor (was Y  Hatch Arm)
-    climber = new Climber (kClimberID);
+    climber = new Climber(kClimberID);
     climber.setPrintDebug(true);
     /*
     hatchArm = new Spark(2);
@@ -74,8 +77,11 @@ public class RobotMap {
     LiveWindow.addActuator("light", "board", (Spark) lights);
     */
 
+    //Instantiate Solenoid Brake
+    //solenoid = new Solenoid(kSolenoid);
+
     //Instantiate light controllers
-    sponsorLights = new Lights(kSponsorLights);
+    //sponsorLights = new Lights(kSponsorLights);
     /*
     leftLights = new Lights(10);
     rightLights = new Lights(11);

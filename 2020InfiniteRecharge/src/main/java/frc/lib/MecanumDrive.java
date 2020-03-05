@@ -71,6 +71,12 @@ public class MecanumDrive extends RobotDriveBase implements Sendable, AutoClosea
   private final SpeedController m_frontRightMotor;
   private final SpeedController m_rearRightMotor;
 
+  private double FLSpeed;
+  private double RLSpeed;
+  private double FRSpeed;
+  private double RRSpeed;
+
+
   private double m_rightSideInvertMultiplier = -1.0;
   private boolean m_reported;
 
@@ -92,6 +98,12 @@ public class MecanumDrive extends RobotDriveBase implements Sendable, AutoClosea
     SendableRegistry.addChild(this, m_rearRightMotor);
     instances++;
     SendableRegistry.addLW(this, "MecanumDrive", instances);
+
+    FLSpeed = 1;
+    RLSpeed = 1;
+    FRSpeed = 1;
+    RRSpeed = 1;
+
   }
 
   @Override
@@ -179,10 +191,10 @@ public class MecanumDrive extends RobotDriveBase implements Sendable, AutoClosea
 
     // These values modified for Luci, your mileage may vary
     double[] wheelSpeeds = new double[4];
-    wheelSpeeds[MotorType.kFrontLeft.value] = xSpeed + ySpeed + zRotation;
-    wheelSpeeds[MotorType.kFrontRight.value] = xSpeed + ySpeed - zRotation;
-    wheelSpeeds[MotorType.kRearLeft.value] = -xSpeed + ySpeed + zRotation;
-    wheelSpeeds[MotorType.kRearRight.value] = -xSpeed + ySpeed - zRotation;
+    wheelSpeeds[MotorType.kFrontLeft.value] = (xSpeed + ySpeed + zRotation) * FLSpeed;
+    wheelSpeeds[MotorType.kFrontRight.value] = (xSpeed + ySpeed - zRotation) * FRSpeed;
+    wheelSpeeds[MotorType.kRearLeft.value] = (-xSpeed + ySpeed + zRotation) * RLSpeed;
+    wheelSpeeds[MotorType.kRearRight.value] = (-xSpeed + ySpeed - zRotation) * RRSpeed;
 
     normalize(wheelSpeeds);
 
