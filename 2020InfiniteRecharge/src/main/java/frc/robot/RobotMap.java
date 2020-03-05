@@ -58,18 +58,18 @@ public class RobotMap {
     System.out.println("RobotMap.init: entered subroutine");
 
     // Instantiate Intake Arm raise/lower motor (was hatch extender)
-    intakeArm = new IntakeArm(kIntakeArmID);
+    intakeArm = new IntakeArm(kIntakeArmID, 0);
     intakeArm.setPrintDebug(true);
 
     //Instantiate Ball Intake in/out motor (was hatch hand)
-    intakeBall = new IntakeBall(kIntakeBallID, true);
+    intakeBall = new IntakeBall(kIntakeBallID, 0, true);
     
     // Instantiate Climber up/down motor (was Y  Hatch Arm)
-    climber = new Climber(kClimberID);
+    climber = new Climber(kClimberID, 0);
     climber.setPrintDebug(true);
     
     //Instantiate Solenoid Brake
-    solenoid = new ClimberSolenoid (kSolenoid, true);
+    solenoid = new ClimberSolenoid (kSolenoid, 0, true);
     
     //Instantiate light controllers
     //sponsorLights = new Lights(kSponsorLights);

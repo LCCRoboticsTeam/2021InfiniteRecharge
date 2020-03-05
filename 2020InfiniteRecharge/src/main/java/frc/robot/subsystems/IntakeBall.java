@@ -74,24 +74,24 @@ public class IntakeBall extends Subsystem {
     	// speed = Robot.m_oi.getSpeed();
     	//speed = .78;
     	
-    	// if (Robot.m_oi.getBallIn()) {
-        //     if (printDebug) {
-        //         System.out.println("IntakeArm: extend speed = " + -1.0 * speed);
-        //     }
-        //     sparkMotor.setInverted(false);  // do not reverse motor
-        //     sparkMotor.set(speed);          // activate motor
+    	if (Robot.m_oi.getBallIn()) {
+            if (printDebug) {
+                System.out.println("IntakeArm: extend speed = " + -1.0 * speed);
+            }
+            talonMotor.setInverted(false);  // do not reverse motor
+            talonMotor.set(speed);          // activate motor
 
-    	// } else if (Robot.m_oi.getBallOut()) {
-        //     if (printDebug) {
-        //         System.out.println("IntakeArm: extend speed = " + -1.0 * speed);
-        //     }
+    	} else if (Robot.m_oi.getBallOut()) {
+            if (printDebug) {
+                System.out.println("IntakeArm: extend speed = " + -1.0 * speed);
+            }
 
-        //     sparkMotor.setInverted(true);  // reverse motor
-        //     sparkMotor.set(speed);         // activate motor
+            talonMotor.setInverted(true);  // reverse motor
+            talonMotor.set(speed);         // activate motor
 
-    	// } else {
-        //     sparkMotor.set(0);
-    	// }
+    	} else {
+            talonMotor.set(0);
+    	}
     	
     }
 
