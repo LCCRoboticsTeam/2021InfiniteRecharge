@@ -94,9 +94,9 @@ public class DriveTrain extends Subsystem {
 		backRight775 = new WPI_TalonSRX(kBackRight775);
 		
 		// Set speedLimit and rotateLimit to default values
-		speedLimit = .6;
-		rotateLimit = .35;
-		strafeLimit = .8;
+		speedLimit = 0.9;
+		rotateLimit = 0.45;
+		strafeLimit = 1.0;
 
 		//Set "Wheel" for calibration if enabled
 		Wheel = 1;

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 // Import WPI libraries
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 
 // Use this for Talon motor controllers
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -23,9 +24,12 @@ public class ClimberSolenoid extends Subsystem {
     private double speed;
     private boolean printDebug;
 
+    private int soleState;
+
     // Default constructor
     public ClimberSolenoid() {
         speed = 0.0;
+        soleState = 0;
         talonMotor = new WPI_TalonSRX(2);
         talonMotor.setInverted(false);
         printDebug = false;
@@ -33,6 +37,7 @@ public class ClimberSolenoid extends Subsystem {
 
     public ClimberSolenoid(double speed) {
         this.speed = speed;
+        soleState = 0;
         talonMotor = new WPI_TalonSRX(2);
         talonMotor.setInverted(false);
         printDebug = false;
@@ -44,6 +49,7 @@ public class ClimberSolenoid extends Subsystem {
      */
     public ClimberSolenoid(int motorIDInput, boolean printDebugInput) {
         
+        soleState = 0;
         speed = 0.0;
         printDebug = printDebugInput;
 
@@ -62,7 +68,9 @@ public class ClimberSolenoid extends Subsystem {
      */
     public ClimberSolenoid(int motorIDInput, double speedInput, boolean printDebugInput) {
 
+        soleState = 0;
         speed = speedInput;
+        // speed = Robot.m_oi.getSpeed();
         printDebug = printDebugInput;
 
         talonMotor = new WPI_TalonSRX(motorIDInput);
@@ -84,6 +92,17 @@ public class ClimberSolenoid extends Subsystem {
     public void periodic() {
         // Put code here to be run every loop
 
+        speed = Robot.m_oi.getSpeed();
+
+        if (soleState == 0) {
+
+            talonMotor.set(.7); 
+
+        } else if (soleState == 1) {
+
+            talonMotor.set(0);
+
+        }
     }
 
     // Put methods for controlling this subsystem
@@ -92,8 +111,24 @@ public class ClimberSolenoid extends Subsystem {
         if (printDebugInput) {
             System.out.println("Solenoid: extend solenoid called");
         }
-        talonMotor.set(speed); 
+        // talonMotor.set(speed); 
+        soleState = 1;
     }
+
+    /**
+     * @return the soleState
+     */
+    public int getSoleState() {
+        return soleState;
+    }
+
+    /**
+     * @param soleState the soleState to set
+     */
+    public void setSoleState(int soleState) {
+        this.soleState = soleState;
+    }
+
     public boolean isPrintDebug() {
         return printDebug;
     }

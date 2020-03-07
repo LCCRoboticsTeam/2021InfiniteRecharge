@@ -51,6 +51,7 @@ public class IntakeBall extends Subsystem {
     public IntakeBall (int motorIDInput, double speedInput, boolean printDebugInput) {
 
         speed = speedInput;
+        // speed = Robot.m_oi.getSpeed();
         printDebug = printDebugInput;
 
         talonMotor = new WPI_TalonSRX(motorIDInput);

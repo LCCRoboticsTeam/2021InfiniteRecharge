@@ -17,7 +17,7 @@ import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeBall;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberSolenoid;
-import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.SponsorLights;
 //import frc.robot.subsystems.Cargo;
 
 /**
@@ -36,7 +36,7 @@ public class RobotMap {
   public static final int kSolenoid = 12;
   //public static final int kCargoID = 3;           // cargoGate = new Spark(3);
 
-  //public static final int kSponsorLights = 9;
+  public static final int kSponsorLights = 2;
   //public static final int kLeftLight = 10;
   //public static final int kRightLight = 11;
 
@@ -47,9 +47,7 @@ public class RobotMap {
   public static Climber climber;
   public static ClimberSolenoid solenoid;
 
-  public static Lights sponsorLights;
-  public static Lights leftLights;
-  public static Lights rightLights;
+  public static SponsorLights sponsorLights;
 
   private boolean printDebug;
 
@@ -58,25 +56,21 @@ public class RobotMap {
     System.out.println("RobotMap.init: entered subroutine");
 
     // Instantiate Intake Arm raise/lower motor (was hatch extender)
-    intakeArm = new IntakeArm(kIntakeArmID, 0);
+    intakeArm = new IntakeArm(kIntakeArmID, 0.4);
     intakeArm.setPrintDebug(true);
 
     //Instantiate Ball Intake in/out motor (was hatch hand)
-    intakeBall = new IntakeBall(kIntakeBallID, 0, true);
+    intakeBall = new IntakeBall(kIntakeBallID, .8, true);
     
     // Instantiate Climber up/down motor (was Y  Hatch Arm)
-    climber = new Climber(kClimberID, 0);
+    climber = new Climber(kClimberID, .8);
     climber.setPrintDebug(true);
     
     //Instantiate Solenoid Brake
     solenoid = new ClimberSolenoid (kSolenoid, 0, true);
     
     //Instantiate light controllers
-    //sponsorLights = new Lights(kSponsorLights);
-    /*
-    leftLights = new Lights(kLeftLight);
-    rightLights = new Lights(kRightLight);
-    */
+    sponsorLights = new SponsorLights(kSponsorLights);
 
   }
     

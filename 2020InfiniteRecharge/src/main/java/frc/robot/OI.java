@@ -201,6 +201,12 @@ public class OI {
 
     }
    
+    public double getRTrigger() {
+    	
+    	return mecstick.getTriggerAxis(GenericHID.Hand.kRight);
+		
+    }
+
     public boolean getSafety() {
     	return launchpad.getRawButton(kSafety);	
     }

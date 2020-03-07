@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 public class Climber extends Subsystem {
     /*
@@ -21,6 +22,8 @@ public class Climber extends Subsystem {
 
     private double speed;
     private boolean printDebug;
+
+    private int climbState;
 
     // Default constructor
     public Climber () {
@@ -37,6 +40,7 @@ public class Climber extends Subsystem {
     public Climber (int motorIDInput) {
         // speed = Robot.m_oi.getSpeed();
         speed = 0.0;
+        climbState = 0;
 
         talonMotor = new WPI_TalonSRX(motorIDInput);
         talonMotor.setInverted(false);
@@ -46,9 +50,11 @@ public class Climber extends Subsystem {
         }
     }
 
-    public Climber (int motorIDInput, int speed) {
+    public Climber (int motorIDInput, double speed) {
         // speed = Robot.m_oi.getSpeed();
         this.speed = speed;
+        // this.speed = Robot.m_oi.getSpeed();
+        climbState = 0;
 
         talonMotor = new WPI_TalonSRX(motorIDInput);
         talonMotor.setInverted(false);
@@ -81,28 +87,50 @@ public class Climber extends Subsystem {
                 // if (printDebug) {
                 //     System.out.println("Climb: up speed = " + speed);
                 // }
-                talonMotor.setInverted(false);  // do not reverse motor
-                talonMotor.set(speed);          // activate motor
-    		
+                // talonMotor.setInverted(false);  // do not reverse motor
+                talonMotor.set(-speed);          // activate motor
+
     		} else if (Robot.m_oi.getClimbDown()) {
                 // if (printDebug) {
                 //     System.out.println("IntakeArm: retract speed = " + speed);
                 // }
-                talonMotor.setInverted(true);   // reverse motor
+                // talonMotor.setInverted(true);   // reverse motor
                 talonMotor.set(speed);
                 
     		} else {  // else no hand button pressed, so stop motor
                 talonMotor.set(0);
             }
 
-            if (talonMotor.getSensorCollection().isFwdLimitSwitchClosed()) {
+            if (climbState == 0 && Robot.m_oi.getClimbUp()) {
+                climbState = 1;
+            }
+
+            if (climbState == 1 && Robot.m_oi.getClimbDown()) {
+                climbState = 2;
+            }
+
+            if (climbState == 2 && talonMotor.getSensorCollection().isFwdLimitSwitchClosed()) {
                 // Activiate the solenoid
-                
+                RobotMap.solenoid.extendSolenoid(true);
             }
         }
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+    /**
+     * @return the climbState
+     */
+    public int getClimbState() {
+        return climbState;
+    }
+
+    /**
+     * @param climbState the climbState to set
+     */
+    public void setClimbState(int climbState) {
+        this.climbState = climbState;
+    }
 
     public boolean isPrintDebug() {
         return printDebug;
