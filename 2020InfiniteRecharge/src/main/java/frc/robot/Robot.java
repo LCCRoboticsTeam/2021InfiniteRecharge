@@ -16,6 +16,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -26,6 +27,7 @@ import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -48,7 +50,9 @@ public class Robot extends TimedRobot {
   // ADXL362 accel;
   // BuiltInAccelerometer bAccel;
 
-  Timer autoTimer = new Timer();
+  AHRS navx;
+
+  Timer autoTimer;
 
   int currentCamera;
 
@@ -67,6 +71,8 @@ public class Robot extends TimedRobot {
     // Create user interface access
     m_oi = new OI();
     System.out.println("robotInit created OI");
+
+    autoTimer = new Timer();
 
     // Initialize the mapping of motor controllers to the Phoenix tuner designated IDs
     // Spark and Talon motors are mapped in here
@@ -101,6 +107,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putNumber("LPDial", m_oi.getSpeed());
 
+    navx = new AHRS(I2C.Port.kOnboard);
+
   }
 
   /**
@@ -116,6 +124,11 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putNumber("LPDial", m_oi.getSpeed());
     SmartDashboard.putNumber("Trigger", m_oi.getRTrigger());
+
+    SmartDashboard.putNumber("Navx Roll: ", navx.getRoll());
+    SmartDashboard.putNumber("Navx Yaw: ", navx.getYaw());
+    SmartDashboard.putNumber("Navx Angle: ", navx.getAngle());
+    SmartDashboard.putNumber("Navx Update Rate: ", navx.getActualUpdateRate());
   }
 
   /**
