@@ -18,6 +18,8 @@ import frc.robot.subsystems.IntakeBall;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberSolenoid;
 import frc.robot.subsystems.SponsorLights;
+import frc.robot.subsystems.RightGhost;
+import frc.robot.subsystems.LeftGhost;
 //import frc.robot.subsystems.Cargo;
 
 /**
@@ -37,8 +39,8 @@ public class RobotMap {
   //public static final int kCargoID = 3;           // cargoGate = new Spark(3);
 
   public static final int kSponsorLights = 2;
-  //public static final int kLeftLight = 10;
-  //public static final int kRightLight = 11;
+  public static final int kRightGhost = 5;
+  public static final int kLeftGhost = 4;
 
   //public static Ultrasonic environmentalUltrasonicFront;
   //public static Ultrasonic environmentalUltrasonicRear;
@@ -48,6 +50,8 @@ public class RobotMap {
   public static ClimberSolenoid solenoid;
 
   public static SponsorLights sponsorLights;
+  public static RightGhost rightGhost;
+  public static LeftGhost leftGhost;
 
   private boolean printDebug;
 
@@ -63,14 +67,18 @@ public class RobotMap {
     intakeBall = new IntakeBall(kIntakeBallID, .8, true);
     
     // Instantiate Climber up/down motor (was Y  Hatch Arm)
-    climber = new Climber(kClimberID, .8);
-    climber.setPrintDebug(true);
+    climber = new Climber(kClimberID, 0.9);
+    climber.setPrintDebug(true); 
     
     //Instantiate Solenoid Brake
     solenoid = new ClimberSolenoid (kSolenoid, 0, true);
     
     //Instantiate light controllers
     sponsorLights = new SponsorLights(kSponsorLights);
+    rightGhost = new RightGhost(kRightGhost);
+    leftGhost = new LeftGhost(kLeftGhost);
+
+
 
   }
     

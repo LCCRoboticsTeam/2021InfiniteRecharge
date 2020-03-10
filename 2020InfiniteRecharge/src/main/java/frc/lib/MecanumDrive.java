@@ -99,10 +99,15 @@ public class MecanumDrive extends RobotDriveBase implements Sendable, AutoClosea
     instances++;
     SendableRegistry.addLW(this, "MecanumDrive", instances);
 
-    FLSpeed = .775591;
+    // FLSpeed = .775591;
+    // RLSpeed = 1.0;
+    // FRSpeed = .913386;
+    // RRSpeed = .763780;
+
+    FLSpeed = 1.0;
     RLSpeed = 1.0;
-    FRSpeed = .913386;
-    RRSpeed = .763780;
+    FRSpeed = 1.0;
+    RRSpeed = 1.0;
 
   }
 

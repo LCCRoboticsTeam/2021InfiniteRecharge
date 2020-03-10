@@ -1,6 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.trajectory.Trajectory.State;
+
+import org.ejml.dense.block.decomposition.qr.BlockHouseHolder_DDRB;
+
 import edu.wpi.first.wpilibj.Spark;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -17,6 +21,20 @@ public class SponsorLights extends Subsystem {
     // private double speed;
     private int lightSetting;
 
+    private double mavGrad;
+    private double red;
+    private double blue;
+    private double rainbowGrad;
+    private double rainbowBlink;
+    private double rainbowWave;
+
+    private double volt;
+
+    private int intState;
+    private int count;
+
+    private boolean buttonState;
+
     @Override
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -24,6 +42,19 @@ public class SponsorLights extends Subsystem {
     }
 
     public SponsorLights (int channelInput){
+        mavGrad = 0.47;
+        red = 0.61;
+        blue = 0.87;
+        rainbowGrad = -0.99;
+        rainbowBlink = -0.89;
+        rainbowWave = -0.45;
+
+        volt = -0.99;
+
+        intState = 0;
+        count = 0;
+        buttonState = false;
+
         channel = channelInput;
         lights = new Spark (channelInput);
         lights.setInverted(false);
@@ -39,6 +70,7 @@ public class SponsorLights extends Subsystem {
         // X = Blue
         // Safety on = Rainbow
 
+        /*
         if (Robot.m_oi.getYButton()) {
             // Rainbow
             lightSetting = 1;
@@ -60,30 +92,55 @@ public class SponsorLights extends Subsystem {
         // (-0.99) Fixed Palette Pattern, Rainbow Palette
         if (lightSetting == 1 && Robot.m_oi.getSafety() != true) {
             
-            lights.set(-0.99);
+            lights.set(rainbowGrad);
         
         // (0.61) Solid Color, Red
         } else if (lightSetting == 2 && Robot.m_oi.getSafety() != true) {
             
-            lights.set(0.61);
+            lights.set(red);
         
         // (0.47) Color 1 and 2 Pattern, Color Gradient, Color 1 and 2
         } else if (lightSetting == 3 && Robot.m_oi.getSafety() != true) {
             
-            lights.set(0.47);
+            lights.set(mavGrad);
             
         // (0.87) Solid Color, Blue
         } else if (lightSetting == 4 && Robot.m_oi.getSafety() != true) {
             
-            lights.set(0.87);
+            lights.set(blue);
          
         // (-0.99) Fixed Palette Pattern, Rainbow Palette
         } else if (Robot.m_oi.getSafety() == true) {
 
-            lights.set(-0.99);
+            lights.set(rainbowGrad);
 
         }
-    // Publish values to SmartDashboard
+        */
+    
+        if (Robot.m_oi.getYButton()) {
+
+            buttonState = true;
+
+        }
+
+        if (buttonState = true && intState == 1) {
+
+            volt = volt+0.2;
+            intState = 0;
+
+        }
+
+        if (count < 50) {
+            count ++;
+        } else {
+            count = 0;
+            buttonState = false;
+            intState = 1;
+        } 
+
+        lights.set(volt);
+
+        // Publish values to SmartDashboard
     //SendableRegistry.setName("lightSetting", 1, (Spark) cargoGate);
     //Sendable.setName("Cargo","Gate"); 
     }
@@ -91,12 +148,36 @@ public class SponsorLights extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    // public void rainbow() {
+    // mavGrad = 0.47;
+    // red = 0.61;
+    // blue = 0.87;
+    // rainbowGrad = -0.99;
+    // rainbowBlink = -0.89;
+    // rainbowWave = -0.45;
 
-    //     lights.set(-0.99);
+    public void setMavGrad() {
+        lights.set(mavGrad);
+    }
 
-    // }
+    public void setRed() {
+        lights.set(red);
+    }
 
+    public void setBlue() {
+        lights.set(blue);
+    }
+
+    public void setRainGrad() {
+        lights.set(rainbowGrad);
+    }
+
+    public void setRainBlink() {
+        lights.set(rainbowBlink);
+    }
+
+    public void setRainWave() {
+        lights.set(rainbowWave);
+    }
 
     /**
      * @return int return the channel

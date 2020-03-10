@@ -95,8 +95,8 @@ public class DriveTrain extends Subsystem {
 		
 		// Set speedLimit and rotateLimit to default values
 		speedLimit = 0.9;
-		rotateLimit = 0.45;
-		strafeLimit = 1.0;
+		rotateLimit = 0.65;
+		strafeLimit = 0.8;
 
 		//Set "Wheel" for calibration if enabled
 		Wheel = 1;
@@ -114,7 +114,7 @@ public class DriveTrain extends Subsystem {
 		rearLeftMotor.follow(backLeft775);
 		rearRightMotor.follow(backRight775);
 		
-		System.out.println("Default constructor completed");
+		System.out.println("Default DriveTrain constructor completed");
 	}
 	
     @Override
@@ -201,12 +201,18 @@ public class DriveTrain extends Subsystem {
 		//System.out.print ("strafeLimit: " + strafeLimit);
 		//System.out.println(Robot.m_oi.getX() * strafeLimit);
 
-		myDrive.driveCartesian(
-			(Robot.m_oi.getY() * speedLimit),       // set Y speed
-			(Robot.m_oi.getX()  * strafeLimit),      // set X speed
-			(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
-			0);                                     // gyro angle 
+		// myDrive.driveCartesian(
+		// 	(Robot.m_oi.getY() * speedLimit),       // set Y speed
+		// 	(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+		// 	(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
+		// 	0);                                     // gyro angle 
 		
+		myDrive.driveCartesian(
+			(Robot.m_oi.getY() * rotateLimit),       // set Y speed
+			(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+			(Robot.m_oi.getRotate() * speedLimit), // set rotation rate
+			0);
+
 		// myDrive.driveCartesian(
 		// 	(Robot.m_oi.getY()),       // set Y speed
 		// 	(Robot.m_oi.getX()),      // set X speed
