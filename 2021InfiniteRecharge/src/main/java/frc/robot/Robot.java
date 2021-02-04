@@ -13,21 +13,22 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.ADXL362;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.SPI;
+// import edu.wpi.first.wpilibj.ADXL362;
+// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+// import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.I2C;
+// import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+// import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.kauailabs.navx.frc.AHRS;
+// import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -50,7 +51,7 @@ public class Robot extends TimedRobot {
   // ADXL362 accel;
   // BuiltInAccelerometer bAccel;
 
-  AHRS navx;
+  // AHRS navx;
 
   Timer autoTimer;
 
@@ -104,10 +105,12 @@ public class Robot extends TimedRobot {
 
     // Publish Mode and Dial value to SmartDashboard
     //SmartDashboard.putData("Auto mode", m_chooser);
+    SmartDashboard.putBoolean("Joystick 0 Connected", DriverStation.getInstance().isJoystickConnected(0));
+    SmartDashboard.putBoolean("Joystick 1 Connected", DriverStation.getInstance().isJoystickConnected(1));
     SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putNumber("LPDial", m_oi.getSpeed());
 
-    navx = new AHRS(I2C.Port.kOnboard);
+    // navx = new AHRS(I2C.Port.kOnboard);
 
   }
 
@@ -125,10 +128,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("LPDial", m_oi.getSpeed());
     SmartDashboard.putNumber("Trigger", m_oi.getRTrigger());
 
-    SmartDashboard.putNumber("Navx Roll: ", navx.getRoll());
-    SmartDashboard.putNumber("Navx Yaw: ", navx.getYaw());
-    SmartDashboard.putNumber("Navx Angle: ", navx.getAngle());
-    SmartDashboard.putNumber("Navx Update Rate: ", navx.getActualUpdateRate());
+    // SmartDashboard.putNumber("Navx Roll: ", navx.getRoll());
+    // SmartDashboard.putNumber("Navx Yaw: ", navx.getYaw());
+    // SmartDashboard.putNumber("Navx Angle: ", navx.getAngle());
+    // SmartDashboard.putNumber("Navx Update Rate: ", navx.getActualUpdateRate());
   }
 
   /**
