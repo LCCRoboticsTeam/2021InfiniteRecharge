@@ -47,6 +47,8 @@ public class Robot extends TimedRobot {
   public UsbCamera camera2;
   public VideoSink server;
 
+  public static Navigator navigator;
+
   // ADXRS450_Gyro gyro;
   // ADXL362 accel;
   // BuiltInAccelerometer bAccel;
@@ -54,6 +56,8 @@ public class Robot extends TimedRobot {
   // AHRS navx;
 
   Timer autoTimer;
+
+  int outputCount;
 
   int currentCamera;
 
@@ -72,6 +76,9 @@ public class Robot extends TimedRobot {
     // Create user interface access
     m_oi = new OI();
     System.out.println("robotInit created OI");
+
+    navigator = new Navigator();
+    System.out.println("robotInit created navigator");
 
     autoTimer = new Timer();
 
@@ -141,13 +148,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-  
+    outputCount = 0;
     //SmartDashboard.putNumber("LPDial", 0.0);
   }
 
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    System.out.println(outputCount + ": " + Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
+    outputCount++;
+    // SmartDashboard.putNumber("Gear Center", Robot.navigator.getGearCenter());
+    // SmartDashboard.putNumber("Distance Target", Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
+    // SmartDashboard.putNumber("Gear Height", Robot.navigator.getGearHeight());
   }
 
   /**
@@ -218,6 +230,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    // SmartDashboard.putNumber("Gear Center", Robot.navigator.getGearCenter());
+    // SmartDashboard.putNumber("Distance Target", Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
+    // SmartDashboard.putNumber("Gear Height", Robot.navigator.getGearHeight());
 
     // if (m_oi.getYButton()) {
 

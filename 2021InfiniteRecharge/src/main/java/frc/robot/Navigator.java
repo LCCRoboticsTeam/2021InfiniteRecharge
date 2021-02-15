@@ -23,7 +23,7 @@ public class Navigator {
 	// private final LIDARLite m_distanceSensor = new LIDARLite(I2C.Port.kOnboard);
 	// private final SPIGyro m_gyro = new SPIGyro(SPI.Port.kMXP);
 	// private final PiCamera m_boilerCamera = new PiCamera("10.21.2.11", 5800);
-	private final PiCamera m_gearCamera = new PiCamera("10.21.2.12", 5800);
+	private final PiCamera m_gearCamera = new PiCamera("10.55.14.12", 5800);
 	
 	// private int m_lidarFailCount = 0;
 	// private static final int k_maxFailCount = 5;
@@ -141,11 +141,11 @@ public class Navigator {
 	}
 
 
-	// public double getDeltaCenterLine() {
-	// 	double distanceToTarget = Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight());
-	// 	double targetCenterLine = Robot.navigator.getTargetCenterLine(distanceToTarget);
-	// 	double centerLine = Robot.navigator.getGearCenter();
-	// 	return targetCenterLine - centerLine;
-	// }
+	public double getDeltaCenterLine() {
+		double distanceToTarget = Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight());
+		double targetCenterLine = Robot.navigator.getTargetCenterLine(distanceToTarget);
+		double centerLine = Robot.navigator.getGearCenter();
+		return targetCenterLine - centerLine;
+	}
 
 }
