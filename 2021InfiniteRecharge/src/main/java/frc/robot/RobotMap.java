@@ -71,7 +71,7 @@ public class RobotMap {
     climber.setPrintDebug(true); 
     
     //Instantiate Solenoid Brake
-    solenoid = new ClimberSolenoid (kSolenoid, 0, true);
+    solenoid = new ClimberSolenoid (kSolenoid, true);
     
     //Instantiate light controllers
     sponsorLights = new SponsorLights(kSponsorLights);

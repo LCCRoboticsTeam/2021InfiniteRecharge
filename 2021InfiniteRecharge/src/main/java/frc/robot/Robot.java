@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
   public UsbCamera camera2;
   public VideoSink server;
 
-  public static Navigator navigator;
+  // public static Navigator navigator;
 
   // ADXRS450_Gyro gyro;
   // ADXL362 accel;
@@ -77,8 +77,8 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     System.out.println("robotInit created OI");
 
-    navigator = new Navigator();
-    System.out.println("robotInit created navigator");
+    // navigator = new Navigator();
+    // System.out.println("robotInit created navigator");
 
     autoTimer = new Timer();
 
@@ -155,8 +155,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
-    System.out.println(outputCount + ": " + Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
-    outputCount++;
+    // System.out.println(outputCount + ": " + Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
+    // outputCount++;
     // SmartDashboard.putNumber("Gear Center", Robot.navigator.getGearCenter());
     // SmartDashboard.putNumber("Distance Target", Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
     // SmartDashboard.putNumber("Gear Height", Robot.navigator.getGearHeight());

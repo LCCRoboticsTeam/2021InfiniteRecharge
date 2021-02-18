@@ -27,7 +27,7 @@ public class REVDigitBoard {
 	AnalogInput pot;
 	
 	byte[][] charreg;
-	Map charmap;
+	Map<Character, Integer> charmap;
 	
 	REVDigitBoard() {
 		i2c = new I2C(Port.kMXP, 0x70);
@@ -136,9 +136,9 @@ public class REVDigitBoard {
 		
 		for (int i = 0; i < 4; i++) {
 			Integer g = (int) charmap.get(str.charAt(i));
-			if (g == null) {
-				g = 36;
-			}
+			// if (g == null) {
+			// 	g = 36;
+			// }
 			charz[i] = g;
 		}
 		this._display(charz);

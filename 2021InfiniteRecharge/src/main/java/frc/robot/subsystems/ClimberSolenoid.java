@@ -2,12 +2,9 @@ package frc.robot.subsystems;
 
 // Import WPI libraries
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 
 // Use this for Talon motor controllers
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-//import frc.robot.Robot;
 
 //
 /**
@@ -16,27 +13,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * into place after climbing
  */
 public class ClimberSolenoid extends Subsystem {
-
-    //private final Spark sparkMotor;
      
     private final WPI_TalonSRX talonMotor;
     
-    private double speed;
     private boolean printDebug;
 
     private int soleState;
 
     // Default constructor
     public ClimberSolenoid() {
-        speed = 0.0;
-        soleState = 0;
-        talonMotor = new WPI_TalonSRX(2);
-        talonMotor.setInverted(false);
-        printDebug = false;
-    }
-
-    public ClimberSolenoid(double speed) {
-        this.speed = speed;
         soleState = 0;
         talonMotor = new WPI_TalonSRX(2);
         talonMotor.setInverted(false);
@@ -50,27 +35,7 @@ public class ClimberSolenoid extends Subsystem {
     public ClimberSolenoid(int motorIDInput, boolean printDebugInput) {
         
         soleState = 0;
-        speed = 0.0;
-        printDebug = printDebugInput;
-
-        talonMotor = new WPI_TalonSRX(motorIDInput);
-        talonMotor.setInverted(false);
-
-        if (printDebug) {
-            System.out.println("Solenoid: initialized constructor ");
-        }
-    }
-
-    // Intialized constructor
-    /**
-     * @param motorIDInput the unique channel ID of the motor
-     * @param speedInput the speed of the motor
-     */
-    public ClimberSolenoid(int motorIDInput, double speedInput, boolean printDebugInput) {
-
-        soleState = 0;
-        speed = speedInput;
-        // speed = Robot.m_oi.getSpeed();
+        // speed = 0.0;
         printDebug = printDebugInput;
 
         talonMotor = new WPI_TalonSRX(motorIDInput);
@@ -92,8 +57,6 @@ public class ClimberSolenoid extends Subsystem {
     public void periodic() {
         // Put code here to be run every loop
 
-        speed = Robot.m_oi.getSpeed();
-
         if (soleState == 0) {
 
             talonMotor.set(.7); 
@@ -111,7 +74,6 @@ public class ClimberSolenoid extends Subsystem {
         if (printDebugInput) {
             System.out.println("Solenoid: extend solenoid called");
         }
-        // talonMotor.set(speed); 
         soleState = 1;
     }
 

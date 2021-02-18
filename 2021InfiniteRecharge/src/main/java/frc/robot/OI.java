@@ -2,8 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.buttons.*;
 
-import java.sql.Driver;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
