@@ -28,6 +28,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.PiCamera.PiCamera;
+
 // import com.kauailabs.navx.frc.AHRS;
 
 import frc.robot.commands.*;
@@ -42,6 +44,7 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   public static OI m_oi;                  // access to user interface
+  public static PiCamera m_piCamera;
   public static DriveTrain driveTrain;    // access to drive train
   public UsbCamera camera1;
   public UsbCamera camera2;
@@ -72,6 +75,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     System.out.println("robotInit: entered subroutine");
+
+    m_piCamera = new PiCamera();
+
+    m_piCamera.Connect("10.55.14.12", 5800);
 
     // Create user interface access
     m_oi = new OI();
@@ -149,12 +156,27 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     outputCount = 0;
+    
     //SmartDashboard.putNumber("LPDial", 0.0);
   }
 
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+
+    
+
+    if(m_piCamera.GetRegions() != null) {
+      // System.out.println("Regions Exist");
+      // System.out.println(m_piCamera.GetRegions().GetRegionCount());
+      if (m_piCamera.GetRegions().GetRegion(0) != null) {
+        // System.out.println("Region Exists");
+        if (m_piCamera.GetRegions().GetRegion(0).m_bounds != null) {
+          System.out.println(m_piCamera.GetRegions().GetRegion(0).m_bounds.m_top);
+        }
+      } 
+    }
+
     // System.out.println(outputCount + ": " + Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
     // outputCount++;
     // SmartDashboard.putNumber("Gear Center", Robot.navigator.getGearCenter());
