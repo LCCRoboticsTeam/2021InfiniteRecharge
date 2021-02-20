@@ -9,7 +9,7 @@ import frc.lib.MecanumDrive;
 public class AutonomousCommand extends Command {
 
     private static final String kDefaultAuto = "Default";
-    private static final String kCustomAuto = "My Auto";
+    private static final String kCustomAuto = "Vision";
 
     private Timer autoTimer = new Timer();
     private String m_autoSelected;
@@ -18,18 +18,26 @@ public class AutonomousCommand extends Command {
 
 
     public AutonomousCommand() {
+        this.m_autoSelected = kDefaultAuto;
         System.out.println("AutonomousCommand: default constructor");
     }
 
     public AutonomousCommand(MecanumDrive myDriveInput) {
         myDrive = myDriveInput;
+        this.m_autoSelected = kDefaultAuto;
+        System.out.println("AutonomousCommand: initialized constructor");
+    }
+
+    public AutonomousCommand(MecanumDrive myDriveInput, String m_autoSelected) {
+        myDrive = myDriveInput;
+        this.m_autoSelected = m_autoSelected;
         System.out.println("AutonomousCommand: initialized constructor");
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        m_autoSelected = m_chooser.getSelected();
+        // m_autoSelected = m_chooser.getSelected();
         autoTimer.reset();
         autoTimer.start();
         System.out.println("AutonomousCommand: initialize() completed");
@@ -39,23 +47,24 @@ public class AutonomousCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-/*
+
         switch (m_autoSelected) {
             case kCustomAuto:
+
+                System.out.println("AutonomousCustom");
+
                 break;
             case kDefaultAuto:
-            default:
-            */
-                if (autoTimer.get() < 1.0) {
-                    myDrive.driveCartesian (0.0, 0.0, -0.5);
-                   
-                } else {
-                    myDrive.driveCartesian (0.0, 0.0, 0.0);
-                }
- /*
+
+                // if (autoTimer.get() < 1.0) {
+                //     myDrive.driveCartesian (0.0, 0.0, -0.5);
+                // } else {
+                //     myDrive.driveCartesian (0.0, 0.0, 0.0);
+                // }
+ 
                 break;
         }
-        */
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()

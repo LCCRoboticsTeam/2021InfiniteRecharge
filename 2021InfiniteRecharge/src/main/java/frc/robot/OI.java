@@ -118,6 +118,14 @@ public class OI {
         return launchpad;
     }
 
+    public boolean getStartButton() {
+        if(controllersConnected()) {
+            return mecstick.getStartButton();
+        } else {
+            return false;
+        }
+    }
+
     public boolean getYButton() {	
         if (controllersConnected()) {
             return mecstick.getYButton();

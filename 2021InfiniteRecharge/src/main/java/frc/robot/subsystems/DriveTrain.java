@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 // import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.lib.MecanumDrive;
@@ -44,65 +43,59 @@ public class DriveTrain extends Subsystem {
 
 	public MecanumDrive myDrive;
 
-	private int Wheel;
-
 	// Constructor for DriveTrain instantiation, with initializers
-	public DriveTrain (double speedLimit, double rotateLimit, double strafeLimit) {
-		
-		// Create motor controllers and assign to the phoenix tuner specified motor identifier
+	public DriveTrain(double speedLimit, double rotateLimit, double strafeLimit) {
+
+		// Create motor controllers and assign to the phoenix tuner specified motor
+		// identifier
 		frontLeftMotor = new WPI_TalonSRX(kFrontLeftCIM);
 		rearLeftMotor = new WPI_TalonSRX(kBackLeftCIM);
 		frontRightMotor = new WPI_TalonSRX(kFrontRightCIM);
 		rearRightMotor = new WPI_TalonSRX(kBackRightCIM);
-		
+
 		frontLeft775 = new WPI_TalonSRX(kFrontLeft775);
 		frontRight775 = new WPI_TalonSRX(kFrontRight775);
 		backLeft775 = new WPI_TalonSRX(kBackLeft775);
 		backRight775 = new WPI_TalonSRX(kBackRight775);
-		
+
 		// set speed and rotate limit based on initialization parameters
 		this.speedLimit = speedLimit;
 		this.rotateLimit = rotateLimit;
 		this.strafeLimit = strafeLimit;
 
-		//Set "Wheel" for calibration if enabled
-		Wheel = 0;
-
-		//Instantiate Mecanum drive with 775 motors
+		// Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
-		
+
 		// Slave CIM motors to 775 motors
 		frontLeftMotor.follow(frontLeft775);
 		frontRightMotor.follow(frontRight775);
 		rearLeftMotor.follow(backLeft775);
 		rearRightMotor.follow(backRight775);
-		
+
 		System.out.println("Initialized constructor completed");
 	}
-	
+
 	// Default DriveTrain constructor
 	public DriveTrain() {
-		
-		// Create motor controllers and assign to the phoenix tuner specified motor identifier
+
+		// Create motor controllers and assign to the phoenix tuner specified motor
+		// identifier
 		frontLeftMotor = new WPI_TalonSRX(kFrontLeftCIM);
 		rearLeftMotor = new WPI_TalonSRX(kBackLeftCIM);
 		frontRightMotor = new WPI_TalonSRX(kFrontRightCIM);
 		rearRightMotor = new WPI_TalonSRX(kBackRightCIM);
-		
+
 		frontLeft775 = new WPI_TalonSRX(kFrontLeft775);
 		frontRight775 = new WPI_TalonSRX(kFrontRight775);
 		backLeft775 = new WPI_TalonSRX(kBackLeft775);
 		backRight775 = new WPI_TalonSRX(kBackRight775);
-		
+
 		// Set speedLimit and rotateLimit to default values
 		speedLimit = 0.9;
 		rotateLimit = 0.65;
 		strafeLimit = 0.8;
 
-		//Set "Wheel" for calibration if enabled
-		Wheel = 1;
-
-		//Instantiate Mecanum drive with 775 motors
+		// Instantiate Mecanum drive with 775 motors
 		myDrive = new MecanumDrive(frontLeft775, backLeft775, frontRight775, backRight775);
 
 		//Instantiate Mecanum drive with CIM motors (Comment out code to make them follow 775's first)
@@ -208,11 +201,20 @@ public class DriveTrain extends Subsystem {
 		// 	(Robot.m_oi.getRotate() * rotateLimit), // set rotation rate
 		// 	0);                                     // gyro angle 
 		
-		myDrive.driveCartesian(
-			(Robot.m_oi.getY() * rotateLimit),       // set Y speed
-			(Robot.m_oi.getX()  * strafeLimit),      // set X speed
-			(Robot.m_oi.getRotate() * speedLimit), // set rotation rate
-			0);
+		//TODO: Rotate robot with vision tracking, set up curve to slow down as target approaches center.
+		if (Robot.m_oi.getStartButton()) {
+			myDrive.driveCartesian(
+				  (0.4),       // set Rotation
+				  (0.0),      // set Strafe
+				  (0.0),        // set Forward/Back
+				  0);
+		} else {
+			myDrive.driveCartesian(
+				(Robot.m_oi.getY() * rotateLimit),       // set Y speed
+				(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+				(Robot.m_oi.getRotate() * speedLimit), // set rotation rate
+				0);
+		}
 		// myDrive.driveCartesian(
 		// 	(Robot.m_oi.getY()),       // set Y speed
 		// 	(Robot.m_oi.getX()),      // set X speed

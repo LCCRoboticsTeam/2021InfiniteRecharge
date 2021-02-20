@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.PiCamera.PiCamera;
+import frc.robot.PiCamera.PiCamera.PiCameraRegions;
+import frc.robot.PiCamera.PiCamera.PiCameraRegion;
 
 // import com.kauailabs.navx.frc.AHRS;
 
@@ -49,6 +51,10 @@ public class Robot extends TimedRobot {
   public UsbCamera camera1;
   public UsbCamera camera2;
   public VideoSink server;
+
+  double speedLimit;
+  double rotateLimit;
+  double strafeLimit;
 
   // public static Navigator navigator;
 
@@ -73,6 +79,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    speedLimit = 0.9;
+		rotateLimit = 0.65;
+		strafeLimit = 0.8;
 
     System.out.println("robotInit: entered subroutine");
 
@@ -115,7 +125,7 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     //m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand(driveTrain.myDrive));
     // chooser.addOption("My Auto", new MyAutoCommand());
-    m_autonomousCommand = new AutonomousCommand(driveTrain.myDrive);
+    m_autonomousCommand = new AutonomousCommand(driveTrain.myDrive, "Vision");
 
     // Publish Mode and Dial value to SmartDashboard
     //SmartDashboard.putData("Auto mode", m_chooser);
@@ -167,12 +177,36 @@ public class Robot extends TimedRobot {
     
 
     if(m_piCamera.GetRegions() != null) {
+      PiCameraRegions regions = m_piCamera.GetRegions();
       // System.out.println("Regions Exist");
       // System.out.println(m_piCamera.GetRegions().GetRegionCount());
-      if (m_piCamera.GetRegions().GetRegion(0) != null) {
+      // if (regions.GetRegion(0) != null) {
+      if (regions.GetRegionCount() > 0) {
         // System.out.println("Region Exists");
-        if (m_piCamera.GetRegions().GetRegion(0).m_bounds != null) {
-          System.out.println(m_piCamera.GetRegions().GetRegion(0).m_bounds.m_top);
+        for (int i = 0; i < regions.GetRegionCount(); i++) {
+          PiCameraRegion region = regions.GetRegion(i);
+          if (region.m_bounds != null) {
+            int top = region.m_bounds.m_top;
+            int bottom = region.m_bounds.m_bottom;
+            int left = region.m_bounds.m_left;
+            int right = region.m_bounds.m_right;
+            int height = Math.abs(bottom-top);
+            int width = Math.abs(right-left);
+            boolean square = (Math.abs(height-width)<20) ? true : false;
+            if (square) {
+              // boolean goodSize = (Math.abs((height*width)-(0.045*Math.pow(top, 2)+500))<200) ? true : false;
+              // if (goodSize) {
+                System.out.print("Region " + i + "; ");
+                System.out.print("Top: " + top + "; ");
+                System.out.print("Bottom: " + bottom + "; ");
+                System.out.print("Left: " + left + "; ");
+                System.out.print("Right: " + right + "; ");
+                System.out.print("Turn Direction: ");
+                System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
+                // System.out.println("Square: " + );
+              // }
+            }
+          }
         }
       } 
     }
@@ -197,14 +231,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //m_autonomousCommand = m_chooser.getSelected();
+    // m_autonomousCommand = m_chooser.getSelected();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+
+    
+    // String autoSelected = SmartDashboard.getString("Auto Selector",
+    // "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+    // = new MyAutoCommand(); break; case "Default Auto": default:
+    // autonomousCommand = new ExampleCommand(); break; }
+     
 
     // schedule the autonomous command (example)
     Scheduler.getInstance().run();
@@ -252,6 +287,49 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+    if(m_piCamera.GetRegions() != null) {
+      PiCameraRegions regions = m_piCamera.GetRegions();
+      // System.out.println("Regions Exist");
+      // System.out.println(m_piCamera.GetRegions().GetRegionCount());
+      // if (regions.GetRegion(0) != null) {
+      if (regions.GetRegionCount() > 0) {
+        // System.out.println("Region Exists");
+        for (int i = 0; i < regions.GetRegionCount(); i++) {
+          PiCameraRegion region = regions.GetRegion(i);
+          if (region.m_bounds != null) {
+            int top = region.m_bounds.m_top;
+            int bottom = region.m_bounds.m_bottom;
+            int left = region.m_bounds.m_left;
+            int right = region.m_bounds.m_right;
+            int height = Math.abs(bottom-top);
+            int width = Math.abs(right-left);
+            boolean square = (Math.abs(height-width)<20) ? true : false;
+            if (square) {
+              // boolean goodSize = (Math.abs((height*width)-(0.045*Math.pow(top, 2)+500))<200) ? true : false;
+              // if (goodSize) {
+                System.out.print("Region " + i + "; ");
+                System.out.print("Top: " + top + "; ");
+                System.out.print("Bottom: " + bottom + "; ");
+                System.out.print("Left: " + left + "; ");
+                System.out.print("Right: " + right + "; ");
+                System.out.print("Turn Direction: ");
+                System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
+                // System.out.println("Square: " + );
+              // }
+            }
+          }
+        }
+      } 
+    }
+
+    // myDrive.driveCartesian(
+		// 	(Robot.m_oi.getY() * rotateLimit),       // set Y speed
+		// 	(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+		// 	(Robot.m_oi.getRotate() * speedLimit), // set rotation rate
+    // 	0);
+    
+    
 
     // SmartDashboard.putNumber("Gear Center", Robot.navigator.getGearCenter());
     // SmartDashboard.putNumber("Distance Target", Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
