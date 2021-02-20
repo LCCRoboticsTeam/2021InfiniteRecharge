@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.lib.MecanumDrive;
-//import frc.robot.subsystems.DriveTrain;
+import frc.robot.Robot;
+import frc.robot.PiCamera.PiCamera.PiCameraRegions;
+import frc.robot.PiCamera.PiCamera.PiCameraRegion;
 
 public class AutonomousCommand extends Command {
 
@@ -42,16 +44,50 @@ public class AutonomousCommand extends Command {
         autoTimer.start();
         System.out.println("AutonomousCommand: initialize() completed");
     }
-
-
+    
+    
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-
+        
         switch (m_autoSelected) {
             case kCustomAuto:
-
+            
                 System.out.println("AutonomousCustom");
+                if(Robot.m_piCamera.GetRegions() != null) {
+                    PiCameraRegions regions = Robot.m_piCamera.GetRegions();
+                    if (regions.GetRegionCount() > 0) {
+                        for (int i = 0; i < regions.GetRegionCount(); i++) {
+                            PiCameraRegion region = regions.GetRegion(i);
+                            if (region.m_bounds != null) {
+                                int top = region.m_bounds.m_top;
+                                int bottom = region.m_bounds.m_bottom;
+                                int left = region.m_bounds.m_left;
+                                int right = region.m_bounds.m_right;
+                                int height = Math.abs(bottom-top);
+                                int width = Math.abs(right-left);
+                                boolean square = (Math.abs(height-width)<20) ? true : false;
+                                if (square) {
+                                    System.out.print("Region " + i + "; ");
+                                    System.out.print("Top: " + top + "; ");
+                                    System.out.print("Bottom: " + bottom + "; ");
+                                    System.out.print("Left: " + left + "; ");
+                                    System.out.print("Right: " + right + "; ");
+                                    System.out.print("Turn Direction: ");
+                                    System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
+
+                                    if (((right+left)/2)-320 < -20) {
+                                        System.out.println("left");
+                                    } else if (((right+left)/2)-320 > 20) {
+                                        System.out.println("right");
+                                    } else {
+                                        System.out.println("center");
+                                    }
+                                }
+                            }
+                        }
+                    } 
+                }
 
                 break;
             case kDefaultAuto:
@@ -61,7 +97,7 @@ public class AutonomousCommand extends Command {
                 // } else {
                 //     myDrive.driveCartesian (0.0, 0.0, 0.0);
                 // }
- 
+
                 break;
         }
         

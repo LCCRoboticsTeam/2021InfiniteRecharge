@@ -176,40 +176,40 @@ public class Robot extends TimedRobot {
 
     
 
-    if(m_piCamera.GetRegions() != null) {
-      PiCameraRegions regions = m_piCamera.GetRegions();
-      // System.out.println("Regions Exist");
-      // System.out.println(m_piCamera.GetRegions().GetRegionCount());
-      // if (regions.GetRegion(0) != null) {
+    if(Robot.m_piCamera.GetRegions() != null) {
+      PiCameraRegions regions = Robot.m_piCamera.GetRegions();
       if (regions.GetRegionCount() > 0) {
-        // System.out.println("Region Exists");
-        for (int i = 0; i < regions.GetRegionCount(); i++) {
-          PiCameraRegion region = regions.GetRegion(i);
-          if (region.m_bounds != null) {
-            int top = region.m_bounds.m_top;
-            int bottom = region.m_bounds.m_bottom;
-            int left = region.m_bounds.m_left;
-            int right = region.m_bounds.m_right;
-            int height = Math.abs(bottom-top);
-            int width = Math.abs(right-left);
-            boolean square = (Math.abs(height-width)<20) ? true : false;
-            if (square) {
-              // boolean goodSize = (Math.abs((height*width)-(0.045*Math.pow(top, 2)+500))<200) ? true : false;
-              // if (goodSize) {
-                System.out.print("Region " + i + "; ");
-                System.out.print("Top: " + top + "; ");
-                System.out.print("Bottom: " + bottom + "; ");
-                System.out.print("Left: " + left + "; ");
-                System.out.print("Right: " + right + "; ");
-                System.out.print("Turn Direction: ");
-                System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
-                // System.out.println("Square: " + );
-              // }
-            }
+          for (int i = 0; i < regions.GetRegionCount(); i++) {
+              PiCameraRegion region = regions.GetRegion(i);
+              if (region.m_bounds != null) {
+                  int top = region.m_bounds.m_top;
+                  int bottom = region.m_bounds.m_bottom;
+                  int left = region.m_bounds.m_left;
+                  int right = region.m_bounds.m_right;
+                  int height = Math.abs(bottom-top);
+                  int width = Math.abs(right-left);
+                  boolean square = (Math.abs(height-width)<20) ? true : false;
+                  if (square) {
+                      System.out.print("Region " + i + "; ");
+                      System.out.print("Top: " + top + "; ");
+                      System.out.print("Bottom: " + bottom + "; ");
+                      System.out.print("Left: " + left + "; ");
+                      System.out.print("Right: " + right + "; ");
+                      System.out.print("Turn Direction: ");
+                      System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
+
+                      if (((right+left)/2)-320 < -20) {
+                          System.out.println("left");
+                      } else if (((right+left)/2)-320 > 20) {
+                          System.out.println("right");
+                      } else {
+                          System.out.println("center");
+                      }
+                  }
+              }
           }
-        }
       } 
-    }
+  }
 
     // System.out.println(outputCount + ": " + Robot.navigator.getDistanceToTarget(Robot.navigator.getGearHeight()));
     // outputCount++;
@@ -288,40 +288,40 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    if(m_piCamera.GetRegions() != null) {
-      PiCameraRegions regions = m_piCamera.GetRegions();
-      // System.out.println("Regions Exist");
-      // System.out.println(m_piCamera.GetRegions().GetRegionCount());
-      // if (regions.GetRegion(0) != null) {
+    if(Robot.m_piCamera.GetRegions() != null) {
+      PiCameraRegions regions = Robot.m_piCamera.GetRegions();
       if (regions.GetRegionCount() > 0) {
-        // System.out.println("Region Exists");
-        for (int i = 0; i < regions.GetRegionCount(); i++) {
-          PiCameraRegion region = regions.GetRegion(i);
-          if (region.m_bounds != null) {
-            int top = region.m_bounds.m_top;
-            int bottom = region.m_bounds.m_bottom;
-            int left = region.m_bounds.m_left;
-            int right = region.m_bounds.m_right;
-            int height = Math.abs(bottom-top);
-            int width = Math.abs(right-left);
-            boolean square = (Math.abs(height-width)<20) ? true : false;
-            if (square) {
-              // boolean goodSize = (Math.abs((height*width)-(0.045*Math.pow(top, 2)+500))<200) ? true : false;
-              // if (goodSize) {
-                System.out.print("Region " + i + "; ");
-                System.out.print("Top: " + top + "; ");
-                System.out.print("Bottom: " + bottom + "; ");
-                System.out.print("Left: " + left + "; ");
-                System.out.print("Right: " + right + "; ");
-                System.out.print("Turn Direction: ");
-                System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
-                // System.out.println("Square: " + );
-              // }
-            }
+          for (int i = 0; i < regions.GetRegionCount(); i++) {
+              PiCameraRegion region = regions.GetRegion(i);
+              if (region.m_bounds != null) {
+                  int top = region.m_bounds.m_top;
+                  int bottom = region.m_bounds.m_bottom;
+                  int left = region.m_bounds.m_left;
+                  int right = region.m_bounds.m_right;
+                  int height = Math.abs(bottom-top);
+                  int width = Math.abs(right-left);
+                  boolean square = (Math.abs(height-width)<20) ? true : false;
+                  if (square) {
+                      System.out.print("Region " + i + "; ");
+                      System.out.print("Top: " + top + "; ");
+                      System.out.print("Bottom: " + bottom + "; ");
+                      System.out.print("Left: " + left + "; ");
+                      System.out.print("Right: " + right + "; ");
+                      System.out.print("Turn Direction: ");
+                      // System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
+
+                      if (((right+left)/2)-320 < -20) {
+                          System.out.println("left; ");
+                      } else if (((right+left)/2)-320 > 20) {
+                          System.out.println("right; ");
+                      } else {
+                          System.out.println("center; ");
+                      }
+                  }
+              }
           }
-        }
       } 
-    }
+  }
 
     // myDrive.driveCartesian(
 		// 	(Robot.m_oi.getY() * rotateLimit),       // set Y speed
