@@ -196,14 +196,16 @@ public class Robot extends TimedRobot {
                       System.out.print("Left: " + left + "; ");
                       System.out.print("Right: " + right + "; ");
                       System.out.print("Turn Direction: ");
-                      System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
+                      // System.out.println(((right+left)/2)<320 ? "left; " : "right; ");
 
-                      if (((right+left)/2)-320 < -20) {
-                          System.out.println("left");
-                      } else if (((right+left)/2)-320 > 20) {
-                          System.out.println("right");
+                      int difference = ((right+left)/2)-320;
+
+                      if (difference < -60) {
+                          System.out.println("left, " + ((6.84*(Math.pow(10, -6)))*Math.pow(difference, 2))+0.35);
+                      } else if (difference > 60) {
+                          System.out.println("right, " + ((6.84*(Math.pow(10, -6)))*Math.pow(difference, 2))+0.35);
                       } else {
-                          System.out.println("center");
+                          System.out.println("center, ");
                       }
                   }
               }
