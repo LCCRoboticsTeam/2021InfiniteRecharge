@@ -68,6 +68,23 @@ public class IntakeBall extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
 
+    /* Sets intake to take in balls */
+    public void intakeIn() {
+        talonMotor.setInverted(false);
+        talonMotor.set(speed);
+    }
+
+    /* Sets intake to spit out balls */
+    public void intakeOut() {
+        talonMotor.setInverted(true);
+        talonMotor.set(speed);
+    }
+
+    /* Turn intake off */
+    public void intakeOff() {
+        talonMotor.set(0.0);
+    }
+
     @Override
     public void periodic() {
         // Put code here to be run every loop
