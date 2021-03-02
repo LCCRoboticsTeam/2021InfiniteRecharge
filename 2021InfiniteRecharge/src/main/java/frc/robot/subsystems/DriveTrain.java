@@ -202,19 +202,19 @@ public class DriveTrain extends Subsystem {
 		// 	0);                                     // gyro angle 
 		
 		//TODO: Rotate robot with vision tracking, set up curve to slow down as target approaches center.
-		if (Robot.m_oi.getStartButton()) {
-			myDrive.driveCartesian(
-				  (0.4),       // set Rotation
-				  (0.0),      // set Strafe
-				  (0.0),        // set Forward/Back
-				  0);
-		} else {
-			myDrive.driveCartesian(
-				(Robot.m_oi.getY() * rotateLimit),       // set Y speed
-				(Robot.m_oi.getX()  * strafeLimit),      // set X speed
-				(Robot.m_oi.getRotate() * speedLimit), // set rotation rate
-				0);
-		}
+		// if (Robot.m_oi.getStartButton()) {
+		// 	myDrive.driveCartesian(
+		// 		  (0.4),       // set Rotation
+		// 		  (0.0),      // set Strafe
+		// 		  (0.0),        // set Forward/Back
+		// 		  0);
+		// } else {
+		myDrive.driveCartesian(
+			(Robot.m_oi.getY() * rotateLimit),       // set Y speed
+			(Robot.m_oi.getX()  * strafeLimit),      // set X speed
+			(Robot.m_oi.getRotate() * speedLimit), // set rotation rate
+			0);
+		// }
 		// myDrive.driveCartesian(
 		// 	(Robot.m_oi.getY()),       // set Y speed
 		// 	(Robot.m_oi.getX()),      // set X speed
