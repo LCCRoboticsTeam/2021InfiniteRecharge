@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.lib.MecanumDrive;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -11,12 +11,16 @@ import frc.robot.PiCamera.PiCamera.PiCameraRegion;
 
 public class AutonomousCommand extends Command {
 
-    private static final String kDefaultAuto = "Default";
-    private static final String kCustomAuto = "Vision";
+    public static final String kDefaultAuto = "Default";
+    public static final String kGalacticAuto = "Galactic";
+    public static final String kBarrelAuto = "Barrel";
+    public static final String kSlalomAuto = "Slalom";
+    public static final String kBounceAuto = "Bounce";
+    // private static final String kCustomAuto = "Vision";
 
     private Timer autoTimer = new Timer();
     private String m_autoSelected;
-    private SendableChooser<String> m_chooser = new SendableChooser<>();
+    // private SendableChooser<String> m_chooser = new SendableChooser<>();
     private MecanumDrive myDrive;
 
     private boolean scanLeft;
@@ -64,7 +68,7 @@ public class AutonomousCommand extends Command {
     protected void execute() {
         
         switch (m_autoSelected) {
-            case kCustomAuto:
+            case kGalacticAuto:
             
                 System.out.println("AutonomousCustom");
                 if (isCapturing != true) {
@@ -171,6 +175,31 @@ public class AutonomousCommand extends Command {
                         RobotMap.intakeBall.intakeOff();
                     }
                 }
+                break;
+            case kBarrelAuto: 
+
+                // TODO: Gyro? Second Camera? Both?
+
+                // Track Cone 1
+                // Get Within Distance
+                // Strafe around to Left (Clockwise)
+                // Wait until see other cone
+                // Go Towards Cone 2
+                // Get within distance
+                // Strafe around to Right (Counter-Clockwise)
+                // Wait until see Cone 3
+                // Track Cone 3
+                // Get within distance
+                // Strafe around to Right (Counter-Clockwise)
+                // Track other cones for Start Zone
+                // Go to Start Zone
+
+                break;
+            case kSlalomAuto: 
+                
+                break;
+            case kBounceAuto: 
+                
                 break;
             case kDefaultAuto:
 

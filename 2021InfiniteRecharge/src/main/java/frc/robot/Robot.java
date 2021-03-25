@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     //m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand(driveTrain.myDrive));
     // chooser.addOption("My Auto", new MyAutoCommand());
-    m_autonomousCommand = new AutonomousCommand(driveTrain.myDrive, "Vision");
+    m_autonomousCommand = new AutonomousCommand(driveTrain.myDrive, AutonomousCommand.kGalacticAuto);
 
     // Publish Mode and Dial value to SmartDashboard
     //SmartDashboard.putData("Auto mode", m_chooser);
