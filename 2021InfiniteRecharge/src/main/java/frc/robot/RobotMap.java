@@ -60,7 +60,7 @@ public class RobotMap {
     System.out.println("RobotMap.init: entered subroutine");
 
     // Instantiate Intake Arm raise/lower motor (was hatch extender)
-    intakeArm = new IntakeArm(kIntakeArmID, 0.4);
+    intakeArm = new IntakeArm(kIntakeArmID, 0.6);
     intakeArm.setPrintDebug(true);
 
     //Instantiate Ball Intake in/out motor (was hatch hand)

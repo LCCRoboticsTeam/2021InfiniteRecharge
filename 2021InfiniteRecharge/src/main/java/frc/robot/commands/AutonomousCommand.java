@@ -29,6 +29,10 @@ public class AutonomousCommand extends Command {
 
     private boolean isCapturing;
 
+    private int capCount;
+
+    private boolean needSqr;
+
     private double startTime;
 
     public AutonomousCommand() {
@@ -57,6 +61,8 @@ public class AutonomousCommand extends Command {
         scanLeft = false;
         scanStart = true;
         scanEnable = true;
+        needSqr = true;
+        capCount = 0;
         autoTimer.reset();
         autoTimer.start();
         System.out.println("AutonomousCommand: initialize() completed");
@@ -71,6 +77,9 @@ public class AutonomousCommand extends Command {
             case kGalacticAuto:
             
                 System.out.println("AutonomousCustom");
+
+                RobotMap.intakeBall.intakeIn();
+
                 if (isCapturing != true) {
                     if(Robot.m_piCamera.GetRegions() != null) {
                         PiCameraRegions regions = Robot.m_piCamera.GetRegions();
@@ -99,7 +108,16 @@ public class AutonomousCommand extends Command {
                                 int height = Math.abs(bottom-top);
                                 int width = Math.abs(right-left);
                                 boolean square = (Math.abs(height-width)<20) ? true : false;
-                                if (square) {
+                                if (square || capCount >= 3) {
+                                    if (scanStart != true) {
+                                        scanStart = true;
+                                    }
+                                    if (scanEnable != true) {
+                                        scanEnable = true;
+                                    }
+                                    if (scanLeft != true) {
+                                        scanLeft = true;
+                                    }
                                     // System.out.print("Region " + i + "; ");
                                     System.out.print("Top: " + top + "; ");
                                     System.out.print("Bottom: " + bottom + "; ");
@@ -112,10 +130,10 @@ public class AutonomousCommand extends Command {
                 
                                     double curve = ((6.84*(Math.pow(10, -6)))*Math.pow(difference, 2))+0.35;
 
-                                    if (difference < -60) {
+                                    if (difference < -40) {
                                         System.out.println("left, " + curve);
                                         myDrive.driveCartesian(-curve, 0.0, 0.0, 0);
-                                    } else if (difference > 60) {
+                                    } else if (difference > 40) {
                                         System.out.println("right, " + curve);
                                         myDrive.driveCartesian(curve, 0.0, 0.0, 0);
                                     } else {
@@ -130,6 +148,36 @@ public class AutonomousCommand extends Command {
                                             // myDrive.driveCartesian(0.0, 0.0, 0.0, 0.0);
                                         }
                                     }
+                                } else {
+                                    // if no regions
+                                    if (scanEnable) {
+                                        if (scanStart == true) {
+                                            scanStart = false;
+                                            startTime = autoTimer.get();
+                                        }
+                                        if (scanLeft == true) {
+                                            if (autoTimer.get() - startTime < 1.5) {
+                                                myDrive.driveCartesian(0.4, 0.0, 0.0, 0.0);
+                                            } else {
+                                                scanStart = true;
+                                                scanLeft = false;
+                                                myDrive.driveCartesian(0.0, 0.0, 0.0, 0.0);
+                                            }
+                                        } else {
+                                            // Scan right, scanLeft == false
+                                            if (autoTimer.get() - startTime < 2.5) {
+                                                myDrive.driveCartesian(0.4, 0.0, 0.0, 0.0);
+                                            } else {
+                                                scanEnable = false;
+                                                scanStart = true;
+                                                scanLeft = true;
+                                                
+                                                RobotMap.intakeBall.intakeOff();
+        
+                                                myDrive.driveCartesian(0.0, 0.0, 0.0, 0.0);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -140,7 +188,7 @@ public class AutonomousCommand extends Command {
                                     startTime = autoTimer.get();
                                 }
                                 if (scanLeft == true) {
-                                    if (autoTimer.get() - startTime < 1) {
+                                    if (autoTimer.get() - startTime < 1.5) {
                                         myDrive.driveCartesian(0.4, 0.0, 0.0, 0.0);
                                     } else {
                                         scanStart = true;
@@ -149,13 +197,15 @@ public class AutonomousCommand extends Command {
                                     }
                                 } else {
                                     // Scan right, scanLeft == false
-                                    if (autoTimer.get() - startTime < 2) {
-                                        myDrive.driveCartesian(-0.4, 0.0, 0.0, 0.0);
+                                    if (autoTimer.get() - startTime < 2.5) {
+                                        myDrive.driveCartesian(0.4, 0.0, 0.0, 0.0);
                                     } else {
                                         scanEnable = false;
                                         scanStart = true;
                                         scanLeft = true;
                                         
+                                        RobotMap.intakeBall.intakeOff();
+
                                         myDrive.driveCartesian(0.0, 0.0, 0.0, 0.0);
                                     }
                                 }
@@ -167,12 +217,13 @@ public class AutonomousCommand extends Command {
                     if (autoTimer.get() - startTime < 1) {
                         // Continue for 2 seconds.
                         myDrive.driveCartesian(0.0 , 0.0, 0.29, 0.0);
-                        RobotMap.intakeBall.intakeIn();
+                        // RobotMap.intakeBall.intakeIn();
                     } else {
                         // Stop motors and track next ball
+                        capCount++;
                         isCapturing = false;
                         myDrive.driveCartesian(0.0, 0.0, 0.0, 0.0);
-                        RobotMap.intakeBall.intakeOff();
+                        // RobotMap.intakeBall.intakeOff();
                     }
                 }
                 break;
